@@ -1,22 +1,19 @@
 export function useAlexPhone() {
-  const config = useRuntimeConfig(); // Para manejar variables de entorno
+  const config = useRuntimeConfig();
   const baseUrl = config.public.apiUrl || "https://test.alexphone.com/api/v1";
 
-  // 🔹 Obtener la lista de iPhones (SKUs)
   const fetchSkus = async () => {
     const { data, error } = await useFetch(`${baseUrl}/skus`);
     if (error) throw new Error("Error al obtener la lista de SKUs");
     return data.value;
   };
 
-  // 🔹 Obtener detalles de un iPhone por SKU
   const fetchSkuDetails = async (sku: string) => {
     const { data, error } = await useFetch(`${baseUrl}/sku/${sku}`);
     if (error) throw new Error(`Error al obtener detalles del SKU ${sku}`);
     return data.value;
   };
 
-  // 🔹 Confirmar una compra
   const confirmPurchase = async (orderData: object) => {
     const { error } = await useFetch(`${baseUrl}/order`, {
       method: "PUT",
