@@ -1,4 +1,4 @@
-export function useAlexPhone() {
+export default function useAlexPhone() {
   const config = useRuntimeConfig();
   const baseUrl = config.public.apiUrl || "https://test.alexphone.com/api/v1";
 
@@ -8,13 +8,13 @@ export function useAlexPhone() {
     return data.value;
   };
 
-  const fetchSkuDetails = async (sku: string) => {
+  const fetchSkuDetails = async (sku) => {
     const { data, error } = await useFetch(`${baseUrl}/sku/${sku}`);
     if (error) throw new Error(`Error al obtener detalles del SKU ${sku}`);
     return data.value;
   };
 
-  const confirmPurchase = async (orderData: object) => {
+  const confirmPurchase = async (orderData) => {
     const { error } = await useFetch(`${baseUrl}/order`, {
       method: "PUT",
       body: orderData,
@@ -34,8 +34,8 @@ function useRuntimeConfig() {
 }
 
 async function useFetch(
-  url: string,
-  options?: { method?: string; body?: object }
+  url,
+  options
 ) {
   const response = await fetch(url, {
     method: options?.method || "GET",
