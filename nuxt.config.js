@@ -41,15 +41,14 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "/", // Asegúrate de que las solicitudes estén basadas en la raíz
-    proxy: true, // Habilitamos el proxy
+    baseURL: "/",
+    proxy: true,
   },
 
-  // Configuración del proxy
   proxy: {
     "/api": {
-      target: "https://test.alexphone.com/api/v1", // El servidor API al que quieres redirigir
-      pathRewrite: { "^/api": "" }, // Reescribimos el path para que se elimine "/api"
+      target: "https://test.alexphone.com/api/v1",
+      pathRewrite: { "^/api": "" },
     },
   },
 
