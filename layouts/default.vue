@@ -1,16 +1,18 @@
 <template>
   <v-app dark>
     <v-app-bar fixed app>
-      <img
-        class="alexphone-logo"
-        alt="Vuetify Logo"
-        src="https://cdn.alexphone.com/images/icons/header/logo-alexphone-main-header.svg"
-      />
+      <a to="/" icon>
+        <img
+          class="alexphone-logo"
+          alt="Vuetify Logo"
+          src="https://cdn.alexphone.com/images/icons/header/logo-alexphone-main-header.svg"
+        />
+      </a>
 
       <v-spacer> </v-spacer>
       <div class="cart-btn">
         <v-btn icon to="/">
-          <v-icon style="font-size:32px;">mdi-cart-outline</v-icon>
+          <v-icon style="font-size: 32px">mdi-cart-outline</v-icon>
         </v-btn>
       </div>
     </v-app-bar>
