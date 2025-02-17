@@ -1,14 +1,22 @@
 <template>
   <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
+    <v-container class="text-center">
+      <!-- Icono de error -->
+      <v-icon large color="error">mdi-alert-circle-outline</v-icon>
+      
+      <!-- Mensajes de error -->
+      <h1 v-if="error.statusCode === 404">
+        {{ pageNotFound }}
+      </h1>
+      <h1 v-else>
+        {{ otherError }}
+      </h1>
+      
+      <!-- Enlace para volver al inicio -->
+      <NuxtLink to="/" class="btn-link">
+        Volver al inicio
+      </NuxtLink>
+    </v-container>
   </v-app>
 </template>
 
@@ -25,7 +33,7 @@ export default {
   data () {
     return {
       pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      otherError: 'Ops! Ha ocurrido un error'
     }
   },
   head () {
@@ -40,6 +48,23 @@ export default {
 
 <style scoped>
 h1 {
-  font-size: 20px;
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.v-icon {
+  margin-bottom: 20px;
+}
+
+.btn-link {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #1976D2; /* Color primario */
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
 }
 </style>
