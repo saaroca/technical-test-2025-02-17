@@ -1,17 +1,16 @@
 export default function useAlexPhone() {
-  const config = useRuntimeConfig();
-  const baseUrl = config.public.apiUrl || "https://test.alexphone.com/api/v1";
+  const baseUrl = "/api"; // Usamos la ruta relativa a la API, porque el proxy se encargará de redirigirla
 
   const fetchSkus = async () => {
-    const { data, error } = await useFetch(`${baseUrl}/skus`);
+    const { data, error } = await useFetch(`${baseUrl}/skus`); // Usamos la ruta relativa
     if (error) throw new Error("Error al obtener la lista de SKUs");
-    return data.value;
+    return data;
   };
 
   const fetchSkuDetails = async (sku) => {
-    const { data, error } = await useFetch(`${baseUrl}/sku/${sku}`);
+    const { data, error } = await useFetch(`${baseUrl}/sku/${sku}`); // Usamos la ruta relativa
     if (error) throw new Error(`Error al obtener detalles del SKU ${sku}`);
-    return data.value;
+    return data;
   };
 
   const confirmPurchase = async (orderData) => {
@@ -25,18 +24,7 @@ export default function useAlexPhone() {
   return { fetchSkus, fetchSkuDetails, confirmPurchase };
 }
 
-function useRuntimeConfig() {
-  return {
-    public: {
-      apiUrl: process.env.PUBLIC_API_URL,
-    },
-  };
-}
-
-async function useFetch(
-  url,
-  options
-) {
+async function useFetch(url, options = {}) {
   const response = await fetch(url, {
     method: options?.method || "GET",
     headers: {
@@ -45,8 +33,11 @@ async function useFetch(
     body: options?.body ? JSON.stringify(options.body) : undefined,
   });
 
-  const data = await response.json();
-  const error = !response.ok ? new Error(data.message || "Fetch error") : null;
+  // Si la respuesta no es exitosa, tratamos de obtener el error.
+  const error = !response.ok ? new Error("Fetch error") : null;
+
+  // Si la respuesta es correcta, parseamos los datos en formato JSON.
+  const data = response.ok ? await response.json() : null;
 
   return { data, error };
 }
