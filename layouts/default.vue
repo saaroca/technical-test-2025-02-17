@@ -13,7 +13,7 @@
           :key="i"
           :to="item.to"
           router
-          exact
+          exact 
         >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
