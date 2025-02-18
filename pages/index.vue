@@ -2,6 +2,7 @@
   <div>
     <div class="header-container">
       <h1>Iphones Reacondicionados</h1>
+      <search class="search-component" @search="updateSearchQuery" />
       <sort-dropdown @sort="onSort" class="small-sort" />
     </div>
 
@@ -31,15 +32,17 @@
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
 import SortDropdown from "../components/sort.vue";
+import Search from "../components/search.vue"; // Asegúrate de importar tu componente de búsqueda
 import { SortOptions, Grade, StorageOrder } from "../constants/constants";
 
 export default {
-  components: { SkuBadges, SortDropdown },
+  components: { SkuBadges, SortDropdown, Search },
   data() {
     return {
       skus: [],
       filteredSkus: [],
       selectedSku: null,
+      searchQuery: "", // Agregar searchQuery aquí
     };
   },
   async mounted() {
@@ -56,6 +59,9 @@ export default {
       if (newSort) {
         this.onSort(newSort, false);
       }
+    },
+    searchQuery() {
+      this.filterSkus();
     },
   },
   methods: {
@@ -98,6 +104,14 @@ export default {
         alert(error.message);
       }
     },
+    updateSearchQuery(query) {
+      this.searchQuery = query;
+    },
+    filterSkus() {
+      this.filteredSkus = this.skus.filter((sku) =>
+        sku.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
   },
 };
 </script>
@@ -108,9 +122,10 @@ export default {
   align-items: baseline;
   margin-top: 10px;
   gap: 50px;
+  font-size: 12px;
 }
 
-.small-sort {
+.small-sort .search-component {
   max-width: 200px;
   font-size: 14px;
   text-align: center;

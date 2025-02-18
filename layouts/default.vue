@@ -9,9 +9,9 @@
         />
       </a>
 
-      <div class="search-container">
+      <!-- <div class="search-container">
         <search @search="onSearch" />
-      </div>
+      </div> -->
 
       <v-spacer></v-spacer>
 

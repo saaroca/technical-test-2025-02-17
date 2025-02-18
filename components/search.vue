@@ -31,7 +31,7 @@ watch(searchQuery, (newValue) => {
 
 <style scoped>
 .search-input {
-  width: 100%;
+  width: 50%;
   max-width: 1200px;
   margin: 0 auto;
   background-color: #1e1e1e;
