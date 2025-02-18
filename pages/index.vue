@@ -11,9 +11,11 @@
         <img :src="sku.image" :alt="sku.name" class="phone-image" />
         <div class="phone-details">
           <h3>{{ sku.name }}</h3>
-          <p>{{ sku.grade }}</p>
-          <p>{{ sku.color }}</p>
-          <p>{{ sku.storage }}</p>
+          <SkuBadges
+            :grade="sku.grade"
+            :color="sku.color"
+            :storage="sku.storage"
+          />
           <p>Precio: ${{ sku.price }}</p>
         </div>
       </div>
@@ -24,6 +26,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import useAlexPhone from "../composables/useAlexPhone.ts";
+import SkuBadges from "../components/skubadges.vue";
+
 
 const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
 
