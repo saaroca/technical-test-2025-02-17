@@ -16,7 +16,7 @@
             :color="sku.color"
             :storage="sku.storage"
           />
-          <p>Precio: ${{ sku.price }}</p>
+          <p style="margin-top:12px;">Precio: ${{ sku.price }}</p>
         </div>
       </div>
     </div>
@@ -27,7 +27,6 @@
 import { ref, onMounted } from "vue";
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
-
 
 const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
 
@@ -88,7 +87,14 @@ const buyNow = async () => {
 }
 
 .phone-details {
+  padding: 10px;
+  text-align: left;
   margin-top: 10px;
+}
+
+.phone-details h3,
+.phone-details p {
+  margin-bottom: 8px; /* Espacio entre los elementos */
 }
 
 @media (max-width: 768px) {
