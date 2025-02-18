@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import useAlexPhone from "../composables/useAlexPhone";
+import useAlexPhone from "../composables/useAlexPhone.ts";
 
 const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
 
