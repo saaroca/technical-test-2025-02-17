@@ -2,7 +2,7 @@
   <div>
     <div class="header-container">
       <h1>Iphones Reacondicionados</h1>
-      <sort-dropdown @sort="onSort" />
+      <sort-dropdown @sort="onSort" class="small-sort" />
     </div>
 
     <div class="phones-container">
@@ -47,7 +47,6 @@ onMounted(async () => {
 });
 
 watch(searchQuery, (newValue) => {
-  console.log("Búsqueda actualizada:", newValue);
   if (newValue.trim() === "") {
     filteredSkus.value = skus.value;
   } else {
@@ -95,19 +94,15 @@ const buyNow = async () => {
 <style scoped>
 .header-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  align-items: baseline;
+  margin-top: 10px;
+  gap: 50px;
 }
 
-h1 {
-  margin: 0;
-  flex: 1;
-}
-
-.sort-dropdown {
-  flex: 0 0 30%;
-  max-width: 30%;
+.small-sort {
+  max-width: 200px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .phones-container {
