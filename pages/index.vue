@@ -100,8 +100,8 @@ export default {
         );
       }
     },
-    async getDetails(sku) {
-      this.$router.push({ name: "PhoneDetails", params: { id: sku.id } });
+    getDetails(sku) {
+      this.$router.push(`/phone/${sku.id}/`);
     },
     async buyNow() {
       const { confirmPurchase } = useAlexPhone();
