@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>Iphones Reacondicionados</h1>
+    <div class="header-container">
+      <h1>Iphones Reacondicionados</h1>
+      <sort-dropdown @sort="onSort" />
+    </div>
+
     <div class="phones-container">
       <div
         v-for="sku in filteredSkus"
@@ -22,15 +26,17 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted, watch, inject } from "vue";
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
+import SortDropdown from "../components/sort.vue";
+import { SortOptions, Grade, StorageOrder } from "../constants/constants";
 
 const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
 const skus = ref([]);
 const selectedSku = ref(null);
-
 const searchQuery = inject("searchQuery");
 
 const filteredSkus = ref([]);
@@ -51,6 +57,27 @@ watch(searchQuery, (newValue) => {
   }
 });
 
+const onSort = (sortOption) => {
+  if (sortOption === SortOptions.LOW_TO_HIGH) {
+    filteredSkus.value = [...filteredSkus.value].sort(
+      (a, b) => a.price - b.price
+    );
+  } else if (sortOption === SortOptions.HIGH_TO_LOW) {
+    filteredSkus.value = [...filteredSkus.value].sort(
+      (a, b) => b.price - a.price
+    );
+  } else if (sortOption === SortOptions.GRADE) {
+    console.log(sortOption);
+    filteredSkus.value = [...filteredSkus.value].sort((a, b) => {
+      return (Grade[b.grade] || 0) - (Grade[a.grade] || 0);
+    });
+  } else if (sortOption === SortOptions.STORAGE) {
+    filteredSkus.value = [...filteredSkus.value].sort((a, b) => {
+      return StorageOrder.indexOf(a.storage) - StorageOrder.indexOf(b.storage);
+    });
+  }
+};
+
 const getDetails = async (sku) => {
   selectedSku.value = await fetchSkuDetails(sku.sku);
 };
@@ -64,7 +91,25 @@ const buyNow = async () => {
   }
 };
 </script>
+
 <style scoped>
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+  flex: 1;
+}
+
+.sort-dropdown {
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+
 .phones-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
