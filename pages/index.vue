@@ -1,26 +1,22 @@
 <template>
   <div>
-    <h1>Lista de iPhones</h1>
+    <h1>Iphones Reacondicionados</h1>
     <div class="phones-container">
-      <div v-for="sku in skus" :key="sku.id" class="phone-card">
+      <div
+        v-for="sku in skus"
+        :key="sku.id"
+        class="phone-card"
+        @click="getDetails(sku)"
+      >
         <img :src="sku.image" :alt="sku.name" class="phone-image" />
         <div class="phone-details">
           <h3>{{ sku.name }}</h3>
-          <p>{{ sku.description }}</p>
+          <p>{{ sku.grade }}</p>
+          <p>{{ sku.color }}</p>
+          <p>{{ sku.storage }}</p>
           <p>Precio: ${{ sku.price }}</p>
-          <button @click="getDetails(sku)">Ver detalles</button>
         </div>
       </div>
-    </div>
-
-    <div v-if="selectedSku" class="selected-sku-details">
-      <h2>{{ selectedSku.name }}</h2>
-      <p><strong>Descripción:</strong> {{ selectedSku.description }}</p>
-      <p><strong>Calificación:</strong> {{ selectedSku.grade }}</p>
-      <p><strong>Color:</strong> {{ selectedSku.color }}</p>
-      <p><strong>Almacenamiento:</strong> {{ selectedSku.storage }} GB</p>
-      <p><strong>Precio:</strong> ${{ selectedSku.price }}</p>
-      <button @click="buyNow">Comprar</button>
     </div>
   </div>
 </template>
@@ -55,38 +51,51 @@ const buyNow = async () => {
 <style scoped>
 .phones-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   margin-top: 20px;
+  padding: 10px;
+  justify-content: center;
 }
 
 .phone-card {
   background-color: #1e1e1e;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    grid-template-columns 0.5s ease;
+}
+
+.phone-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .phone-image {
-  max-width: 100%;
+  /* si no se pone la imagen se solapa con el div i pierde responsividad*/
+  width: clamp(150px, 90%, 250px);
   height: auto;
+  max-height: 250px;
   border-radius: 8px;
+  transition: width 0.3s ease;
 }
 
 .phone-details {
   margin-top: 10px;
 }
 
-.selected-sku-details {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #fafafa;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+@media (max-width: 768px) {
+  .phones-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }
 
-.selected-sku-details h2 {
-  margin-top: 0;
+@media (max-width: 480px) {
+  .phones-container {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
