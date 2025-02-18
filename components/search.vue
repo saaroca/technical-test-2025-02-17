@@ -10,14 +10,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const emit = defineEmits();
 const searchQuery = ref("");
 
-const filterPhones = () => {
-  emit("search", searchQuery.value);
+const cleanQuery = (query) => {
+  return query.trim().replace(/\s+/g, " ");
 };
+
+const filterPhones = () => {
+  const cleanedQuery = cleanQuery(searchQuery.value);
+  emit("search", cleanedQuery);
+};
+
+watch(searchQuery, (newValue) => {
+  searchQuery.value = cleanQuery(newValue);
+});
 </script>
 
 <style scoped>

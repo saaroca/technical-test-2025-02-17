@@ -22,9 +22,8 @@
     </div>
   </div>
 </template>
-
 <script setup>
-import { ref, onMounted, computed, inject } from "vue";
+import { ref, onMounted, watch, inject } from "vue";
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
 
@@ -32,18 +31,22 @@ const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
 const skus = ref([]);
 const selectedSku = ref(null);
 
-const searchQuery = inject("searchQuery", "");
+const searchQuery = inject("searchQuery");
+
+const filteredSkus = ref([]);
 
 onMounted(async () => {
   skus.value = await fetchSkus();
+  filteredSkus.value = skus.value;
 });
 
-const filteredSkus = computed(() => {
-  if (!searchQuery.trim()) {
-    return skus.value;
+watch(searchQuery, (newValue) => {
+  console.log("Búsqueda actualizada:", newValue);
+  if (newValue.trim() === "") {
+    filteredSkus.value = skus.value;
   } else {
-    return skus.value.filter(
-      (sku) => sku.name.toLowerCase().includes(searchQuery.toLowerCase()) // Filtrar por el nombre
+    filteredSkus.value = skus.value.filter((sku) =>
+      sku.name.toLowerCase().includes(newValue.toLowerCase())
     );
   }
 });
@@ -61,7 +64,6 @@ const buyNow = async () => {
   }
 };
 </script>
-
 <style scoped>
 .phones-container {
   display: grid;

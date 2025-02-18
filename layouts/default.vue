@@ -35,28 +35,29 @@
 </template>
 
 <script>
+import { ref, provide } from "vue";
 import search from "../components/search.vue";
 
 export default {
   name: "DefaultLayout",
-  comments: {
+  components: {
     search,
   },
-  data() {
-    return {
-      fixed: false,
-      searchQuery: "",
+  setup() {
+    const fixed = ref(false);
+    const searchQuery = ref("");
+
+    const onSearch = (query) => {
+      console.log(query);
+      searchQuery.value = query;
     };
-  },
-  methods: {
-    onSearch(query) {
-      console.log(query)
-      this.searchQuery = query;
-    },
-  },
-  provide() {
+
+    provide("searchQuery", searchQuery);
+
     return {
-      searchQuery: this.searchQuery,
+      fixed,
+      searchQuery,
+      onSearch,
     };
   },
 };
