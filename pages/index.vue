@@ -27,67 +27,78 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, watch, inject } from "vue";
+<script>
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
 import SortDropdown from "../components/sort.vue";
 import { SortOptions, Grade, StorageOrder } from "../constants/constants";
 
-const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
-const skus = ref([]);
-const selectedSku = ref(null);
-const searchQuery = inject("searchQuery");
+export default {
+  components: { SkuBadges, SortDropdown },
+  data() {
+    return {
+      skus: [],
+      filteredSkus: [],
+      selectedSku: null,
+    };
+  },
+  async mounted() {
+    const { fetchSkus } = useAlexPhone();
+    this.skus = await fetchSkus();
+    this.filteredSkus = [...this.skus];
 
-const filteredSkus = ref([]);
+    if (this.$route.query.sort) {
+      this.onSort(this.$route.query.sort, false);
+    }
+  },
+  watch: {
+    "$route.query.sort"(newSort) {
+      if (newSort) {
+        this.onSort(newSort, false);
+      }
+    },
+  },
+  methods: {
+    onSort(sortOption, updateUrl = true) {
+      if (updateUrl) {
+        this.$router.push({
+          query: { ...this.$route.query, sort: sortOption },
+        });
+      }
 
-onMounted(async () => {
-  skus.value = await fetchSkus();
-  filteredSkus.value = skus.value;
-});
-
-watch(searchQuery, (newValue) => {
-  if (newValue.trim() === "") {
-    filteredSkus.value = skus.value;
-  } else {
-    filteredSkus.value = skus.value.filter((sku) =>
-      sku.name.toLowerCase().includes(newValue.toLowerCase())
-    );
-  }
-});
-
-const onSort = (sortOption) => {
-  if (sortOption === SortOptions.LOW_TO_HIGH) {
-    filteredSkus.value = [...filteredSkus.value].sort(
-      (a, b) => a.price - b.price
-    );
-  } else if (sortOption === SortOptions.HIGH_TO_LOW) {
-    filteredSkus.value = [...filteredSkus.value].sort(
-      (a, b) => b.price - a.price
-    );
-  } else if (sortOption === SortOptions.GRADE) {
-    console.log(sortOption);
-    filteredSkus.value = [...filteredSkus.value].sort((a, b) => {
-      return (Grade[b.grade] || 0) - (Grade[a.grade] || 0);
-    });
-  } else if (sortOption === SortOptions.STORAGE) {
-    filteredSkus.value = [...filteredSkus.value].sort((a, b) => {
-      return StorageOrder.indexOf(a.storage) - StorageOrder.indexOf(b.storage);
-    });
-  }
-};
-
-const getDetails = async (sku) => {
-  selectedSku.value = await fetchSkuDetails(sku.sku);
-};
-
-const buyNow = async () => {
-  try {
-    await confirmPurchase({ sku: selectedSku.value.id, quantity: 1 });
-    alert("Compra confirmada");
-  } catch (error) {
-    alert(error.message);
-  }
+      if (sortOption === SortOptions.LOW_TO_HIGH) {
+        this.filteredSkus = [...this.filteredSkus].sort(
+          (a, b) => a.price - b.price
+        );
+      } else if (sortOption === SortOptions.HIGH_TO_LOW) {
+        this.filteredSkus = [...this.filteredSkus].sort(
+          (a, b) => b.price - a.price
+        );
+      } else if (sortOption === SortOptions.GRADE) {
+        this.filteredSkus = [...this.filteredSkus].sort(
+          (a, b) => (Grade[b.grade] || 0) - (Grade[a.grade] || 0)
+        );
+      } else if (sortOption === SortOptions.STORAGE) {
+        this.filteredSkus = [...this.filteredSkus].sort(
+          (a, b) =>
+            StorageOrder.indexOf(a.storage) - StorageOrder.indexOf(b.storage)
+        );
+      }
+    },
+    async getDetails(sku) {
+      const { fetchSkuDetails } = useAlexPhone();
+      this.selectedSku = await fetchSkuDetails(sku.sku);
+    },
+    async buyNow() {
+      const { confirmPurchase } = useAlexPhone();
+      try {
+        await confirmPurchase({ sku: this.selectedSku.id, quantity: 1 });
+        alert("Compra confirmada");
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+  },
 };
 </script>
 
