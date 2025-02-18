@@ -23,10 +23,6 @@ const filterPhones = () => {
   const cleanedQuery = cleanQuery(searchQuery.value);
   emit("search", cleanedQuery);
 };
-
-watch(searchQuery, (newValue) => {
-  searchQuery.value = cleanQuery(newValue);
-});
 </script>
 
 <style scoped>
