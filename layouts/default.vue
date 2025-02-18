@@ -45,12 +45,19 @@ export default {
   data() {
     return {
       fixed: false,
+      searchQuery: "",
     };
   },
   methods: {
     onSearch(query) {
-      console.log("Filtrar productos con:", query);
+      console.log(query)
+      this.searchQuery = query;
     },
+  },
+  provide() {
+    return {
+      searchQuery: this.searchQuery,
+    };
   },
 };
 </script>

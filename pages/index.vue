@@ -3,7 +3,7 @@
     <h1>Iphones Reacondicionados</h1>
     <div class="phones-container">
       <div
-        v-for="sku in skus"
+        v-for="sku in filteredSkus"
         :key="sku.id"
         class="phone-card"
         @click="getDetails(sku)"
@@ -16,7 +16,7 @@
             :color="sku.color"
             :storage="sku.storage"
           />
-          <p style="margin-top:12px;">Precio: ${{ sku.price }}</p>
+          <p style="margin-top: 12px">Precio: ${{ sku.price }}</p>
         </div>
       </div>
     </div>
@@ -24,17 +24,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, inject } from "vue";
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
 
 const { fetchSkus, fetchSkuDetails, confirmPurchase } = useAlexPhone();
-
 const skus = ref([]);
 const selectedSku = ref(null);
 
+const searchQuery = inject("searchQuery", "");
+
 onMounted(async () => {
   skus.value = await fetchSkus();
+});
+
+const filteredSkus = computed(() => {
+  if (!searchQuery.trim()) {
+    return skus.value;
+  } else {
+    return skus.value.filter(
+      (sku) => sku.name.toLowerCase().includes(searchQuery.toLowerCase()) // Filtrar por el nombre
+    );
+  }
 });
 
 const getDetails = async (sku) => {
@@ -78,7 +89,6 @@ const buyNow = async () => {
 }
 
 .phone-image {
-  /* si no se pone la imagen se solapa con el div i pierde responsividad*/
   width: clamp(150px, 90%, 250px);
   height: auto;
   max-height: 250px;
@@ -94,7 +104,7 @@ const buyNow = async () => {
 
 .phone-details h3,
 .phone-details p {
-  margin-bottom: 8px; /* Espacio entre los elementos */
+  margin-bottom: 8px;
 }
 
 @media (max-width: 768px) {
