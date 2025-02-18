@@ -17,7 +17,7 @@
 
       <div class="cart-btn">
         <v-btn icon to="/">
-          <v-icon style="font-size: 32px">mdi-cart-outline</v-icon>
+          <v-icon class="cart-icon">mdi-cart-outline</v-icon>
         </v-btn>
       </div>
     </v-app-bar>
@@ -77,5 +77,9 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+.cart-icon {
+  font-size: 32px;
 }
 </style>

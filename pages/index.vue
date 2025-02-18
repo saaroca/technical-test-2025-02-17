@@ -32,7 +32,7 @@
 import useAlexPhone from "../composables/useAlexPhone.ts";
 import SkuBadges from "../components/skubadges.vue";
 import SortDropdown from "../components/sort.vue";
-import Search from "../components/search.vue"; // Asegúrate de importar tu componente de búsqueda
+import Search from "../components/search.vue";
 import { SortOptions, Grade, StorageOrder } from "../constants/constants";
 
 export default {
@@ -42,7 +42,7 @@ export default {
       skus: [],
       filteredSkus: [],
       selectedSku: null,
-      searchQuery: "", // Agregar searchQuery aquí
+      searchQuery: "",
     };
   },
   async mounted() {
@@ -52,6 +52,11 @@ export default {
 
     if (this.$route.query.sort) {
       this.onSort(this.$route.query.sort, false);
+    }
+
+    if (this.$route.query.search) {
+      this.searchQuery = this.$route.query.search;
+      this.filterSkus();
     }
   },
   watch: {
@@ -68,7 +73,11 @@ export default {
     onSort(sortOption, updateUrl = true) {
       if (updateUrl) {
         this.$router.push({
-          query: { ...this.$route.query, sort: sortOption },
+          query: {
+            ...this.$route.query,
+            sort: sortOption,
+            search: this.searchQuery,
+          },
         });
       }
 
@@ -106,6 +115,9 @@ export default {
     },
     updateSearchQuery(query) {
       this.searchQuery = query;
+      this.$router.push({
+        query: { ...this.$route.query, search: query },
+      });
     },
     filterSkus() {
       this.filteredSkus = this.skus.filter((sku) =>
