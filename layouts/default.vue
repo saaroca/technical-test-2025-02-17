@@ -4,12 +4,17 @@
       <a to="/" icon>
         <img
           class="alexphone-logo"
-          alt="Vuetify Logo"
+          alt="AlexPhone Logo"
           src="https://cdn.alexphone.com/images/icons/header/logo-alexphone-main-header.svg"
         />
       </a>
 
-      <v-spacer> </v-spacer>
+      <div class="search-container">
+        <search @search="onSearch" />
+      </div>
+
+      <v-spacer></v-spacer>
+
       <div class="cart-btn">
         <v-btn icon to="/">
           <v-icon style="font-size: 32px">mdi-cart-outline</v-icon>
@@ -30,12 +35,22 @@
 </template>
 
 <script>
+import search from "../components/search.vue";
+
 export default {
   name: "DefaultLayout",
+  comments: {
+    search,
+  },
   data() {
     return {
       fixed: false,
     };
+  },
+  methods: {
+    onSearch(query) {
+      console.log("Filtrar productos con:", query);
+    },
   },
 };
 </script>
@@ -44,7 +59,15 @@ export default {
 .alexphone-logo {
   margin-left: 2rem;
 }
+
 .cart-btn {
   margin-right: 2rem;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 </style>
