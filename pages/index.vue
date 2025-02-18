@@ -101,8 +101,7 @@ export default {
       }
     },
     async getDetails(sku) {
-      const { fetchSkuDetails } = useAlexPhone();
-      this.selectedSku = await fetchSkuDetails(sku.sku);
+      this.$router.push({ name: "PhoneDetails", params: { id: sku.id } });
     },
     async buyNow() {
       const { confirmPurchase } = useAlexPhone();

@@ -1,17 +1,13 @@
 <template>
   <v-app dark>
     <v-app-bar fixed app>
-      <a to="/" icon>
+      <nuxt-link to="/" icon>
         <img
           class="alexphone-logo"
           alt="AlexPhone Logo"
           src="https://cdn.alexphone.com/images/icons/header/logo-alexphone-main-header.svg"
         />
-      </a>
-
-      <!-- <div class="search-container">
-        <search @search="onSearch" />
-      </div> -->
+      </nuxt-link>
 
       <v-spacer></v-spacer>
 
@@ -70,13 +66,6 @@ export default {
 
 .cart-btn {
   margin-right: 2rem;
-}
-
-.search-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
 }
 
 .cart-icon {
