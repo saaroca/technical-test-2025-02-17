@@ -5,6 +5,13 @@ export const SortOptions = {
   STORAGE: "storage",
 };
 
+export const sortText = {
+  PRICE_LOW: "Precio más bajo",
+  PRICE_HIGH: "Precio más alto",
+  BEST_GRADE: "Mejor estado",
+  HIGH_STORAGE: "Mayor almacenamiento"
+}
+
 export enum Grade {
   excellent = 3,
   very_good = 2,

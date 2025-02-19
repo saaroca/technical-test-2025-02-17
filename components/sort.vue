@@ -11,16 +11,16 @@
 
 <script setup>
 import { ref, defineEmits } from "vue";
-import { SortOptions } from "../constants/constants";
+import { SortOptions, sortText } from "../constants/constants";
 
 const emit = defineEmits();
 const selectedSortOption = ref();
 
 const sortOptions = [
-  { text: "Precio más bajo", value: SortOptions.LOW_TO_HIGH },
-  { text: "Precio más alto", value: SortOptions.HIGH_TO_LOW },
-  { text: "Mejor estado", value: SortOptions.GRADE },
-  { text: "Mayor almacenamiento", value: SortOptions.STORAGE },
+  { text: sortText.PRICE_LOW, value: SortOptions.LOW_TO_HIGH },
+  { text: sortText.PRICE_HIGH, value: SortOptions.HIGH_TO_LOW },
+  { text: sortText.BEST_GRADE, value: SortOptions.GRADE },
+  { text: sortText.HIGH_STORAGE, value: SortOptions.STORAGE },
 ];
 
 const onSortChange = () => {
