@@ -6,13 +6,15 @@
 
     <div class="info-container">
       <h1>{{ sku.name }}</h1>
-      <p>Precio: ${{ sku.price }}</p>
       <p>{{ sku.description }}</p>
-      <p><strong>Capacidad:</strong> {{ sku.storage }}</p>
-      <p><strong>Grado:</strong> {{ sku.grade }}</p>
-      <p><strong>Color:</strong> {{ sku.color }}</p>
-
-      <button @click="addToCart">COMPRAR</button>
+      <p>Capacidad</p>
+      <SkuBadges :storage="sku.storage" class="badge" />
+      <p>Estado</p>
+      <SkuBadges :grade="sku.grade" class="badge" />
+      <p>Color</p>
+      <SkuBadges :color="sku.color" class="badge" />
+      <p class="price">Precio: ${{ sku.price }}</p>
+      <button @click="addToCart" class="buy-button">COMPRAR AHORA</button>
     </div>
   </div>
   <p v-else>Cargando detalles...</p>
@@ -20,14 +22,13 @@
 
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
+import SkuBadges from "../../components/skubadges.vue";
+
 export default {
+  components: { SkuBadges },
   async asyncData({ params }) {
-    console.log(params);
-
     const { fetchSkuDetails } = useAlexPhone();
-    const skus = await fetchSkuDetails(params.id);
-    const sku = skus.find((sku) => sku.id === parseInt(params.id));
-
+    const sku = await fetchSkuDetails(params.id);
     return { sku };
   },
   methods: {
@@ -37,3 +38,54 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.details-container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  max-width: 900px;
+  margin: 50px auto;
+  justify-content: center;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.phone-image {
+  width: 100%;
+  height: 500px;
+}
+
+
+.info-container {
+  flex: 1;
+}
+
+.badge {
+  margin-bottom: 20px !important;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.buy-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.buy-button:hover {
+  background-color: #0056b3;
+}
+</style>

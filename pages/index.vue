@@ -101,7 +101,7 @@ export default {
       }
     },
     getDetails(sku) {
-      this.$router.push(`/phone/${sku.id}/`);
+      this.$router.push(`/phone/${sku.sku}/`);
     },
     async buyNow() {
       const { confirmPurchase } = useAlexPhone();
