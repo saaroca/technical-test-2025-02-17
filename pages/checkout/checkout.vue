@@ -1,0 +1,147 @@
+<template>
+  <div class="checkout-container">
+    <h1>Resumen de Compra</h1>
+    <div v-if="cart.length" class="cart-items">
+      <div v-for="(item, index) in cart" :key="index" class="cart-item">
+        <img :src="item.image" :alt="item.name" class="item-image" />
+        <div class="item-info">
+          <h2>{{ item.name }}</h2>
+          <p>
+            {{ item.storage }}GB / {{ translateGrade(item.grade) }} /
+            {{ translateColor(item.color) }}
+          </p>
+          <p class="price">Precio: ${{ item.price }}</p>
+        </div>
+        <button @click="removeFromCart(index)" class="delete-button">
+          <v-icon>mdi-trash-can-outline</v-icon>
+        </button>
+      </div>
+      <p class="total-price">Total: ${{ totalPrice }}</p>
+      <button @click="confirmPurchase" class="confirm-button">
+        Confirmar Compra
+      </button>
+    </div>
+    <div style="padding: 4rem" v-else>
+      <p>No hay productos en el carrito.</p>
+      <nuxt-link to="/">Voler a inicio</nuxt-link>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      cart: [],
+    };
+  },
+  computed: {
+    totalPrice() {
+      return this.cart.reduce((sum, item) => sum + item.price, 0);
+    },
+  },
+  mounted() {
+    this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+  },
+  methods: {
+    confirmPurchase() {
+      alert("Compra confirmada. ¡Gracias por tu pedido!");
+      localStorage.removeItem("cart");
+      this.cart = [];
+    },
+    removeFromCart(index) {
+      this.cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+    },
+    translateGrade(grade) {
+      const translations = {
+        excellent: "Excelente",
+        very_good: "Muy bueno",
+        good: "Bueno",
+      };
+      return translations[grade] || grade;
+    },
+    translateColor(color) {
+      const translations = {
+        white: "Blanco",
+        black: "Negro",
+        red: "Rojo",
+        pink: "Rosa",
+      };
+      return translations[color] || color;
+    },
+  },
+};
+</script>
+
+<style scoped>
+.checkout-container {
+  max-width: 800px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.item-info {
+  flex: 1;
+  text-align: left;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.total-price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.confirm-button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  border-radius: 5px;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+.delete-button {
+  /* background-color: #dc3545; */
+  color: #dc3545;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 5px;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+</style>

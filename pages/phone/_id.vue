@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     addToCart() {
-      console.log("Producto añadido al carrito:", this.sku);
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(this.sku);
+      localStorage.setItem("cart", JSON.stringify(cart));
     },
   },
 };
@@ -59,7 +61,6 @@ export default {
   width: 100%;
   height: 500px;
 }
-
 
 .info-container {
   flex: 1;

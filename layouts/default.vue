@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
 
       <div class="cart-btn">
-        <v-btn icon to="/">
+        <v-btn icon to="/checkout/checkout">
           <v-icon class="cart-icon">mdi-cart-outline</v-icon>
         </v-btn>
       </div>
