@@ -31,6 +31,7 @@
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
 import { useToastMessages } from "../../composables/useToast";
+import { GRADE_TRANSLATIONS, COLOR_TRANSLATIONS } from "~/utils/constants";
 export default {
   data() {
     return {
@@ -57,7 +58,7 @@ export default {
           grade: item.grade,
           color: item.color,
           storage: item.storage,
-        })), 
+        })),
       };
 
       try {
@@ -82,18 +83,18 @@ export default {
     },
     translateGrade(grade) {
       const translations = {
-        excellent: "Excelente",
-        very_good: "Muy bueno",
-        good: "Bueno",
+        excellent: GRADE_TRANSLATIONS.excellent,
+        very_good: GRADE_TRANSLATIONS.very_good,
+        good: GRADE_TRANSLATIONS.good,
       };
       return translations[grade] || grade;
     },
     translateColor(color) {
       const translations = {
-        white: "Blanco",
-        black: "Negro",
-        red: "Rojo",
-        pink: "Rosa",
+        white: COLOR_TRANSLATIONS.white,
+        black: COLOR_TRANSLATIONS.black,
+        red: COLOR_TRANSLATIONS.red,
+        pink: COLOR_TRANSLATIONS.pink,
       };
       return translations[color] || color;
     },
