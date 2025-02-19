@@ -30,6 +30,7 @@
 
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
+import { useToastMessages } from "../../composables/useToast";
 export default {
   data() {
     return {
@@ -46,6 +47,7 @@ export default {
   },
   methods: {
     async confirmPurchase() {
+      const { showSuccess, showError } = useToastMessages();
       const { confirmPurchase } = useAlexPhone();
 
       const orderData = {
@@ -61,16 +63,20 @@ export default {
       try {
         await confirmPurchase(orderData);
 
-        alert("Compra confirmada. ¡Gracias por tu pedido!");
+        showSuccess("¡Compra confirmada exitosamente!");
 
         localStorage.removeItem("cart");
         this.cart = [];
       } catch (error) {
-        alert("Hubo un error al confirmar tu compra.");
+        showError(
+          "Hubo un error al confirmar tu compra. Por favor, inténtalo de nuevo."
+        );
       }
     },
 
     removeFromCart(index) {
+      const { showSuccess } = useToastMessages();
+      showSuccess("Se ha eliminado del carrito");
       this.cart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },

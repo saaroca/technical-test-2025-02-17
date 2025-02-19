@@ -23,7 +23,7 @@
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
 import SkuBadges from "../../components/skubadges.vue";
-
+import { useToastMessages } from "../../composables/useToast";
 export default {
   components: { SkuBadges },
   async asyncData({ params }) {
@@ -33,9 +33,11 @@ export default {
   },
   methods: {
     addToCart() {
+      const { showSuccess, showError } = useToastMessages();
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       cart.push(this.sku);
       localStorage.setItem("cart", JSON.stringify(cart));
+      showSuccess("Añadido al carrito correctamente")
     },
   },
 };
