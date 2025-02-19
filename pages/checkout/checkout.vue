@@ -160,7 +160,6 @@ export default {
 }
 
 .delete-button {
-  /* background-color: #dc3545; */
   color: #dc3545;
   border: none;
   padding: 8px 12px;
