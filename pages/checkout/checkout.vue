@@ -57,7 +57,7 @@ export default {
           grade: item.grade,
           color: item.color,
           storage: item.storage,
-        })),
+        })), 
       };
 
       try {
