@@ -14,7 +14,7 @@ import { ref, defineEmits } from "vue";
 import { SortOptions } from "../constants/constants";
 
 const emit = defineEmits();
-const selectedSortOption = ref(SortOptions.LOW_TO_HIGH);
+const selectedSortOption = ref();
 
 const sortOptions = [
   { text: "Precio más bajo", value: SortOptions.LOW_TO_HIGH },
