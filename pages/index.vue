@@ -103,15 +103,7 @@ export default {
     getDetails(sku) {
       this.$router.push(`/phone/${sku.sku}/`);
     },
-    async buyNow() {
-      const { confirmPurchase } = useAlexPhone();
-      try {
-        await confirmPurchase({ sku: this.selectedSku.id, quantity: 1 });
-        alert("Compra confirmada");
-      } catch (error) {
-        alert(error.message);
-      }
-    },
+
     updateSearchQuery(query) {
       this.searchQuery = query;
       this.$router.push({
