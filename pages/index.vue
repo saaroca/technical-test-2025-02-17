@@ -149,7 +149,7 @@ h1 {
 .phones-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 40px;
   margin-top: 20px;
   padding: 10px;
   justify-content: center;
@@ -168,7 +168,13 @@ h1 {
 
 .phone-card:hover {
   transform: scale(1.05);
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+  background-color: #333;
+  border: 2px solid #2d63e0;
+}
+
+.phone-card:hover .phone-image {
+  opacity: 0.9;
 }
 
 .phone-image {
@@ -176,7 +182,7 @@ h1 {
   height: auto;
   max-height: 250px;
   border-radius: 8px;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, opacity 0.3s ease;
 }
 
 .phone-details {
@@ -188,6 +194,11 @@ h1 {
 .phone-details h3,
 .phone-details p {
   margin-bottom: 8px;
+}
+
+.phone-card:hover .phone-details h3 {
+  color: #2d63e0;
+  transform: translateY(-5px);
 }
 
 @media (max-width: 935px) {

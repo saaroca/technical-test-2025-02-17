@@ -34,6 +34,5 @@ const filterPhones = () => {
   margin-left: 25px;
   margin-right: 25px;
   border-radius: 6px;
-  height: 40px;
 }
 </style>
