@@ -12,15 +12,12 @@
 const props = defineProps({
   grade: {
     type: String,
-    required: true,
   },
   color: {
     type: String,
-    required: true,
   },
   storage: {
     type: Number,
-    required: true,
   },
 });
 

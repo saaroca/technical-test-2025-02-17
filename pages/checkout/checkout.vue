@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import useAlexPhone from "../../composables/useAlexPhone";
 export default {
   data() {
     return {
@@ -44,10 +45,12 @@ export default {
     this.cart = JSON.parse(localStorage.getItem("cart")) || [];
   },
   methods: {
-    confirmPurchase() {
+    async confirmPurchase() {
+      const { confirmPurchase } = useAlexPhone();
+      const confirm = await confirmPurchase(this.cart);
       alert("Compra confirmada. ¡Gracias por tu pedido!");
       localStorage.removeItem("cart");
-      this.cart = [];
+      // this.cart = [];
     },
     removeFromCart(index) {
       this.cart.splice(index, 1);
