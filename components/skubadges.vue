@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { GRADE_TRANSLATIONS, COLOR_TRANSLATIONS } from "~/utils/constants";
+import { GRADE_TRANSLATIONS, COLOR_TRANSLATIONS } from "~/constants/constants";
 
 const props = defineProps({
   grade: {
@@ -28,7 +28,7 @@ const gradeLabel =
     excellent: GRADE_TRANSLATIONS.excellent,
     very_good: GRADE_TRANSLATIONS.very_good,
     good: GRADE_TRANSLATIONS.good,
-  }[props.grade] || "Desconocido";
+  }[props.grade] || GRADE_TRANSLATIONS.unknown;
 
 const colorLabel =
   {
@@ -36,7 +36,7 @@ const colorLabel =
     black: COLOR_TRANSLATIONS.black,
     red: COLOR_TRANSLATIONS.red,
     pink: COLOR_TRANSLATIONS.pink,
-  }[props.color] || "Desconocido";
+  }[props.color] || COLOR_TRANSLATIONS.unknown;
 </script>
 
 <style scoped>

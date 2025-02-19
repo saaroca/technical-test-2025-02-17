@@ -31,7 +31,7 @@
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
 import { useToastMessages } from "../../composables/useToast";
-import { GRADE_TRANSLATIONS, COLOR_TRANSLATIONS } from "~/utils/constants";
+import { GRADE_TRANSLATIONS, COLOR_TRANSLATIONS } from "~/constants/constants";
 export default {
   data() {
     return {
