@@ -47,11 +47,29 @@ export default {
   methods: {
     async confirmPurchase() {
       const { confirmPurchase } = useAlexPhone();
-      const confirm = await confirmPurchase(this.cart);
-      alert("Compra confirmada. ¡Gracias por tu pedido!");
-      localStorage.removeItem("cart");
-      // this.cart = [];
+
+      const orderData = {
+        skus: this.cart.map((item) => ({
+          id: item.id,
+          sku: item.sku,
+          grade: item.grade,
+          color: item.color,
+          storage: item.storage,
+        })),
+      };
+
+      try {
+        await confirmPurchase(orderData);
+
+        alert("Compra confirmada. ¡Gracias por tu pedido!");
+
+        localStorage.removeItem("cart");
+        this.cart = [];
+      } catch (error) {
+        alert("Hubo un error al confirmar tu compra.");
+      }
     },
+
     removeFromCart(index) {
       this.cart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(this.cart));
