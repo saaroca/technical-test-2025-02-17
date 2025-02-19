@@ -133,7 +133,11 @@ export default {
   align-items: baseline;
   margin-top: 10px;
   gap: 50px;
-  font-size: 12px;
+  font-size: 32px;
+}
+
+h1 {
+  font-size: inherit;
 }
 
 .small-sort .search-component {
@@ -186,15 +190,37 @@ export default {
   margin-bottom: 8px;
 }
 
+@media (max-width: 935px) {
+  .phones-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .header-container {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1264px) {
+  .phones-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
+  .header-container {
+    font-size: 20px;
+  }
+
   .phones-container {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .phones-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+  }
+  .header-container {
+    gap: 5px;
   }
 }
 </style>
