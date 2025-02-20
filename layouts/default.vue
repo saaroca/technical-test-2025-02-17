@@ -1,6 +1,10 @@
 <template>
   <v-app dark>
-    <v-app-bar fixed app>
+    <v-app-bar 
+      fixed 
+      app 
+      :class="{ 'hide-navbar': isHidden }"
+    >
       <nuxt-link to="/" icon>
         <img
           class="alexphone-logo"
@@ -31,7 +35,7 @@
 </template>
 
 <script>
-import { ref, provide } from "vue";
+import { ref, onMounted, onUnmounted, provide } from "vue";
 import search from "../components/search.vue";
 
 export default {
@@ -42,11 +46,27 @@ export default {
   setup() {
     const fixed = ref(false);
     const searchQuery = ref("");
+    const isHidden = ref(false);
+    let lastScrollY = 0;
 
     const onSearch = (query) => {
-      console.log(query);
       searchQuery.value = query;
     };
+
+    const handleScroll = () => {
+      console.log("handleScroll")
+      const currentScrollY = window.scrollY;
+      isHidden.value = currentScrollY > lastScrollY && currentScrollY > 50;
+      lastScrollY = currentScrollY;
+    };
+
+    onMounted(() => {
+      window.addEventListener("scroll", handleScroll);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener("scroll", handleScroll);
+    });
 
     provide("searchQuery", searchQuery);
 
@@ -54,6 +74,7 @@ export default {
       fixed,
       searchQuery,
       onSearch,
+      isHidden,
     };
   },
 };
@@ -70,5 +91,10 @@ export default {
 
 .cart-icon {
   font-size: 32px;
+}
+
+.hide-navbar {
+  transform: translateY(-100%) !important;
+  transition: transform 0.3s ease-in-out !important;
 }
 </style>
