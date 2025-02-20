@@ -24,20 +24,35 @@
 import useAlexPhone from "../../composables/useAlexPhone";
 import SkuBadges from "../../components/skubadges.vue";
 import { useToastMessages } from "../../composables/useToast";
+
 export default {
   components: { SkuBadges },
-  async asyncData({ params }) {
+  data() {
+    return {
+      sku: null,
+    };
+  },
+  async mounted() {
+    const { showError } = useToastMessages();
     const { fetchSkuDetails } = useAlexPhone();
-    const sku = await fetchSkuDetails(params.id);
-    return { sku };
+    const skuId = this.$route.params.id;
+
+    try {
+      this.sku = await fetchSkuDetails(skuId);
+      if (!this.sku) {
+        showError("No se ha encontrado el producto");
+      }
+    } catch (err) {
+      showError("Error al cargar el producto");
+    }
   },
   methods: {
     addToCart() {
-      const { showSuccess, showError } = useToastMessages();
+      const { showSuccess } = useToastMessages();
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       cart.push(this.sku);
       localStorage.setItem("cart", JSON.stringify(cart));
-      showSuccess("Añadido al carrito correctamente")
+      showSuccess("Añadido al carrito correctamente");
     },
   },
 };
