@@ -90,9 +90,12 @@ export default {
   margin-bottom: 20px !important;
 }
 
-.price {
+.price,
+.name {
   font-size: 1.4rem;
   font-weight: bold;
+  text-align: center !important;
+  align-items: center !important;
 }
 
 .buy-button {
@@ -119,8 +122,6 @@ export default {
 
   .name,
   .price {
-    text-align: center !important;
-    align-items: center !important;
   }
 
   .image-container {
