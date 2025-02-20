@@ -3,7 +3,7 @@
     <div class="header-container">
       <h1>Iphones Reacondicionados</h1>
       <search class="search-component" @search="updateSearchQuery" />
-      <!-- <sort-dropdown @sort="onSort" class="small-sort" /> -->
+      <sort-dropdown @sort="onSort" class="small-sort" />
     </div>
 
     <div class="phones-container">
@@ -126,28 +126,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .header-container {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 20px;
-  align-items: center;
+  align-items: baseline;
   margin-top: 10px;
-  justify-content: center;
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 20px;
   margin: 0;
 }
 
 .search-component {
-  font-size: 16px;
-  text-align: center;
-}
-
-.small-sort {
-  max-width: 200px;
   font-size: 16px;
   text-align: center;
 }
@@ -175,7 +168,6 @@ h1 {
   transform: scale(1.05);
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
   background-color: #333;
-  border: 2px solid #2d63e0;
 }
 
 .phone-card:hover .phone-image {
@@ -202,7 +194,6 @@ h1 {
 }
 
 .phone-card:hover .phone-details h3 {
-  color: #2d63e0;
   transform: translateY(-5px);
 }
 
@@ -210,11 +201,10 @@ h1 {
   .phones-container {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  .header-container {
-    gap: 10px;
-  }
+
   .header-container {
     grid-template-columns: 1fr;
+    gap: 20px !important;
   }
 }
 
@@ -225,6 +215,7 @@ h1 {
 
   .header-container {
     grid-template-columns: 2fr;
+    gap: 20px;
   }
 }
 
@@ -250,9 +241,15 @@ h1 {
   }
 }
 
+@media (min-width: 960px) {
+  .container {
+    max-width: 996px !important;
+  }
+}
+
 @media (min-width: 1264px) {
   .container {
-    max-width: 2500px;
+    max-width: 1300px !important;
   }
 }
 </style>

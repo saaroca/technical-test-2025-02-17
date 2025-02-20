@@ -7,6 +7,7 @@
     @input="filterPhones"
     clearable
     hide-details
+    autocomplete="off"
   ></v-text-field>
 </template>
 
