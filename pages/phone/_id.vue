@@ -5,7 +5,7 @@
     </div>
 
     <div class="info-container">
-      <h1>{{ sku.name }}</h1>
+      <h1 class="name">{{ sku.name }}</h1>
       <p>{{ sku.description }}</p>
       <p>Capacidad</p>
       <SkuBadges :storage="sku.storage" class="badge" />
@@ -71,12 +71,15 @@ export default {
 .image-container {
   flex: 1;
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
 }
 
 .phone-image {
   width: 100%;
-  height: 500px;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
 }
 
 .info-container {
@@ -105,5 +108,24 @@ export default {
 
 .buy-button:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 800px) {
+  .details-container {
+    flex-direction: column;
+    padding: 20px;
+    margin-top: 10px;
+  }
+
+  .name,
+  .price {
+    text-align: center !important;
+    align-items: center !important;
+  }
+
+  .image-container {
+    width: 100%;
+    max-width: 500px;
+  }
 }
 </style>
