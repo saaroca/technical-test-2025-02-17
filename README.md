@@ -1,89 +1,82 @@
-<a id="readme-top"></a>
+# Proyecto para AlexPhone de iPhones Reacondicionados
 
+Este proyecto es un ecommerce donde los usuarios pueden explorar, buscar y ordenar los iPhones que tenemos en stock.
+Utiliza _Vue.js 2.7.16v_ con _Nuxt.js 2.18.1v_ para frontend.
 
+### Configuración del proyecto
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://github.com/user-attachments/assets/bfabf983-bc04-4528-bc9a-472fa44e9cc9" alt="AlexPhone" height="60">
-  </a>
+1. Instalación
+   Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
 
-  <h3 align="center">Prueba técnica AlexPhone</h3>
+git clone https://github.com/saaroca/technical-test-2025-02-17
 
-  <p align="center">
-    Junior - 2025
-    <br />
-    <a href="https://www.linkedin.com/company/alexphone/jobs/"><strong>Oferta de trabajo »</strong></a>
-    <br />
-    <br />
-    <a href="mailto:developers@alexphone.com">Contacto</a>
-    &middot;
-    <a href="https://www.alexphone.es">Nuestra Web</a>
-  </p>
-</div>
+2. Instalar dependencias
+   Entra en el directorio del proyecto y ejecuta el siguiente comando para instalar las dependencias:
 
-¡Hola candidato! 
+cd nombre-del-repositorio
+npm install
 
-Desde AlexPhone, queremos apostar por actualizar y crear nuevas experiencias para nuestros clientes. Es por esto que desde negocio nos han pedido crear una nueva web e-commerce con la que deslumbrar a nuestros clientes. Para esta aplicación, nuestros compis de Back-End nos han preparado una API preparada para abastecernos con los datos que necesitamos. La estructura de la web será la siguiente:
+3. Iniciar el servidor de desarrollo
+   En el directorio del proyecto, ejecuta el siguiente comando para iniciar el servidor de desarrollo:
+   npm run dev
 
-  - Tendremos un layout con 2 partes principales.
-    - Una barra de navegación superior, con el logo de AlexPhone a la izquierda, y a la derecha un botón que nos redirigirá al carrito de compra.
-    - La sección principal, donde se mostrará la página actual.
-   
-  - La página principal será una lista de iPhones que podamos comprar.
-    - Se mostrará como una grid de elementos.
-    - Cada elemento tendrá una imagen, un título, precio y sus características (color, grado y capacidad).
-    - También desde negocio nos comentan que les gustaría filtrar y ordenar.
-    - También quieren que al refrescar, podamos mantener este filtrado y ordenado en la URL para que sea más comodo para el usuario compartir los enlaces filtrados.
-  - Al hacer click en cualquier elemento, nos redirigirá a su página de detalle. En el detalle, veremos un layout de dos columnas.
-    - A la izquierda, la imagen del iPhone que estamos visitando.
-    - A la derecha toda su información completa (Título, precio, descripción, capacidad, grado y color). Además, contaremos con un botón que nos añadirá este teléfono a nuestro carrito de compra.
+Accede a la aplicación en tu navegador en:
+http://localhost:3000
 
-  - Al hacer click en el botón del carrito en la barra de navegación superior, nos redirigirá a la pantalla de carrito. En ella, nos mostrará una lista vertical con los productos añadidos. Desde negocio también nos comentan que les gustaría que los productos del carrito se mantengan guardados entre sesiones, para que los clientes no pierdan el progreso realizado.
-    - En esta página, también habra un botón para realidar el pedido. Esto enviará los productos al Back-End y validará que todo está correcto.
+### Funcionalidades
 
-A nivel ténico, nuestro Project Manajer nos ha pasado algunos criterios sobre cómo espera que la socluión sea implementada:
-- Es obligatorio usar Git y hacerlo bien (metodología Git Flow, commits frecuentes y relevantes, etc...) porque quieren ir echándole un vistazo al código de vez en cuando.
-- Debemos hacer tests tanto unitarios como de integración.
-- Uso de formateadores de código (linter) en el proyecto para garantizar un estado homogéneo del código.
-- También le gustaría que se desplegara el proyecto en algúna plataforma (a elección personal) para poder ver una preview del proyecto.
+1. Página de Inicio:
+   Visualiza todos los productos disponibles.
+   Ordena los productos por precio, calidad y capacidad.
+   Filtra productos por nombre o especificaciones.
 
-## API AlexPhone:
-  - Lista de iPhones -> GET https://test.alexphone.com/api/v1/skus -> Lista de SKU (`Sku[]`)
-  - Detalle de iPhone -> GET https://test.alexphone.com/api/v1/sku/{sku} -> SKU (`Sku`)
-  - Confirmación de compra -> PUT https://test.alexphone.com/api/v1/order -> Void
-    - Validación: Este endpoint valida si los objetos enviados tienen este contrato:
-    ```javascript
-    interface CreateOrderSku {
-      id: string
-      sku: string
-      grade: SkuGrade
-      color: SkuColor
-      storage: SkuStorage
-    }
+2. Detalles del Producto:
+   Al hacer clic en un producto, podrás ver su imagen, nombre, estado, capacidad de almacenamiento, precio y una opción para añadirlo al carrito.
 
-    interface CreateOrderBody {
-      skus: Sku[]
-    }
-    ```
+3. Carrito de Compras:
+   Añade productos al carrito, visualízalos y eliminalos.
 
-## Valores devueltos por la API:
-SKU: 
-```javascript
-interface Sku {
-  id: string
-  sku: string
-  name: string
-  description: string
-  price: number
-  grade: SkuGrade
-  color: SkuColor
-  storage: SkuStorage
-  image: string
-}
+### Estructura del proyecto
 
-type SkuGrade = "excellent" | "very_good" | "good"
-type SkuColor = "white" | "black" | "red" | "pink"
-type SkuStorage = 64 | 128 | 256 | 512
-```  
+Se sigue una estructura modular, cada componente se divide en funcionalidades específicas:
+**/components** Componentes reutilizables (ej. SkuBadges, Search)
+**/pages** Páginas principales (Home, checkout, phone details)
+**/composables** Funciones reutilizables, las llamadas a API
+**/constants** Archivos de constantes
+**/types** Donde tenemos las interfaces
+**/plugins** Donde tenemos el toast por ej
+**/test** Donde guardamos los test untiarios y de integración
+**/layouts** El navbar, la página de error..
+
+API externa: [API AlexPhone](https://test.alexphone.com/api/v1).
+
+### Endpoints
+
+1. **Lista de iPhones** (Obtener todos los iPhones / SKUs)
+
+   - **Endpoint**: `GET https://test.alexphone.com/api/v1/skus`
+   - **Descripción**: Obtiene una lista de todos los iPhones (SKUs) disponibles.
+   - **Respuesta**: Devuelve un arreglo de objetos SKU.
+
+2. **Detalle de iPhone** (Obtener detalles de un iPhone específico / SKU)
+
+   - **Endpoint**: `GET https://test.alexphone.com/api/v1/sku/{sku}`
+   - **Descripción**: Obtiene información detallada sobre un iPhone específico (SKU) a partir de su identificador SKU.
+   - **Respuesta**: Devuelve los detalles del SKU solicitado.
+
+3. **Confirmación de compra** (Confirmar la compra de un pedido)
+
+   - **Endpoint**: `PUT https://test.alexphone.com/api/v1/order`
+   - **Descripción**: Confirma un pedido de compra, enviando los detalles de los productos a comprar.
+   - **Cuerpo**: Espera un objeto `CreateOrderBody` que contiene una lista de SKUs (iPhones) a comprar.
+   - **Respuesta**: Devuelve una respuesta de tipo `void`.
+
+### Contribución
+
+Si deseas contribuir al proyecto, sigue estos pasos:
+
+Haz un fork del repositorio.
+Crea una nueva rama (git checkout -b feature/nueva-funcionalidad).
+Realiza tus cambios y haz commit de ellos (git commit -am 'Agrega nueva funcionalidad').
+Haz push a tu rama (git push origin feature/nueva-funcionalidad).
+Crea un pull request explicando los cambios realizados.
