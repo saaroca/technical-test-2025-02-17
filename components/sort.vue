@@ -5,8 +5,7 @@
     item-text="text"
     item-value="value"
     label="Ordenar por"
-    outlined
-    dense
+    clearable
     @change="onSortChange"
     id="sort-select"
   />
@@ -31,6 +30,8 @@ export default {
     onSortChange() {
       if (this.selectedSortOption) {
         this.$emit("sort", this.selectedSortOption);
+      } else {
+        this.$emit("reset-sort");
       }
     },
   },

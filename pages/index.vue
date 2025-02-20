@@ -3,7 +3,11 @@
     <div class="header-container">
       <h1>Iphones Reacondicionados</h1>
       <search class="search-component" @search="updateSearchQuery" />
-      <sort-dropdown @sort="onSort" class="small-sort" />
+      <sort-dropdown
+        @sort="onSort"
+        @reset-sort="resetSkus"
+        class="small-sort"
+      />
     </div>
 
     <div class="phones-container">
@@ -109,6 +113,10 @@ export default {
 
       if (!this.searchQuery.trim()) {
         this.filteredSkus = [...this.skus];
+
+        if (this.$route.query.sort) {
+          this.onSort(this.$route.query.sort, false);
+        }
       } else {
         this.filterSkus();
       }
@@ -117,10 +125,24 @@ export default {
         query: { ...this.$route.query, search: this.searchQuery || undefined },
       });
     },
+
     filterSkus() {
       this.filteredSkus = this.skus.filter((sku) =>
         sku.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
+    },
+    resetSkus() {
+      if (this.searchQuery) {
+        this.filterSkus();
+      } else {
+        this.filteredSkus = [...this.skus];
+      }
+
+      this.$router.push({
+        query: {
+          search: this.searchQuery || undefined,
+        },
+      });
     },
   },
 };
