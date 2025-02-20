@@ -2,28 +2,37 @@
   <v-select
     v-model="selectedSortOption"
     :items="sortOptions"
+    item-text="text"
+    item-value="value"
     label="Ordenar por"
     outlined
     dense
     @change="onSortChange"
+    id="sort-select"
   />
 </template>
 
-<script setup>
-import { ref, defineEmits } from "vue";
+<script>
 import { SortOptions, sortText } from "../constants/constants";
 
-const emit = defineEmits();
-const selectedSortOption = ref();
-
-const sortOptions = [
-  { text: sortText.PRICE_LOW, value: SortOptions.LOW_TO_HIGH },
-  { text: sortText.PRICE_HIGH, value: SortOptions.HIGH_TO_LOW },
-  { text: sortText.BEST_GRADE, value: SortOptions.GRADE },
-  { text: sortText.HIGH_STORAGE, value: SortOptions.STORAGE },
-];
-
-const onSortChange = () => {
-  emit("sort", selectedSortOption.value);
+export default {
+  data() {
+    return {
+      selectedSortOption: null,
+      sortOptions: [
+        { text: sortText.PRICE_LOW, value: SortOptions.LOW_TO_HIGH },
+        { text: sortText.PRICE_HIGH, value: SortOptions.HIGH_TO_LOW },
+        { text: sortText.BEST_GRADE, value: SortOptions.GRADE },
+        { text: sortText.HIGH_STORAGE, value: SortOptions.STORAGE },
+      ],
+    };
+  },
+  methods: {
+    onSortChange() {
+      if (this.selectedSortOption) {
+        this.$emit("sort", this.selectedSortOption);
+      }
+    },
+  },
 };
 </script>

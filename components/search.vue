@@ -6,6 +6,7 @@
     dense
     hide-details
     @input="filterPhones"
+    id="search-input"
   />
 </template>
 
@@ -15,10 +16,12 @@ import { ref } from "vue";
 const emit = defineEmits();
 const searchQuery = ref("");
 
+// Limpiar el query de búsqueda
 const cleanQuery = (query) => {
   return query.trim().replace(/\s+/g, " ");
 };
 
+// Emitir el evento con el valor limpio
 const filterPhones = () => {
   const cleanedQuery = cleanQuery(searchQuery.value);
   emit("search", cleanedQuery);
