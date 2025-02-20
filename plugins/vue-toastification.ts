@@ -4,9 +4,8 @@ import "vue-toastification/dist/index.css";
 
 const options = {
   position: "bottom-center",
-  timeout: 5000,
+  timeout: 2000,
   closeOnClick: true,
-  pauseOnHover: true,
 };
 
 Vue.use(Toast, options);
