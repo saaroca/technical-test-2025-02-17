@@ -1,13 +1,13 @@
 <template>
   <v-text-field
     v-model="searchQuery"
-    class="search-input"
     append-icon="mdi-magnify"
-    dense
-    hide-details
-    @input="filterPhones"
     id="search-input"
-  />
+    label="¿Qué buscas?"
+    @input="filterPhones"
+    clearable
+    hide-details
+  ></v-text-field>
 </template>
 
 <script setup>
@@ -16,26 +16,13 @@ import { ref } from "vue";
 const emit = defineEmits();
 const searchQuery = ref("");
 
-// Limpiar el query de búsqueda
 const cleanQuery = (query) => {
+  if (query === null) return query;
   return query.trim().replace(/\s+/g, " ");
 };
 
-// Emitir el evento con el valor limpio
 const filterPhones = () => {
   const cleanedQuery = cleanQuery(searchQuery.value);
   emit("search", cleanedQuery);
 };
 </script>
-
-<style scoped>
-.search-input {
-  width: 50%;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: #1e1e1e;
-  margin-left: 25px;
-  margin-right: 25px;
-  border-radius: 6px;
-}
-</style>

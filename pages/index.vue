@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <div class="header-container">
       <h1>Iphones Reacondicionados</h1>
       <search class="search-component" @search="updateSearchQuery" />
-      <sort-dropdown @sort="onSort" class="small-sort" />
+      <!-- <sort-dropdown @sort="onSort" class="small-sort" /> -->
     </div>
 
     <div class="phones-container">
@@ -105,9 +105,16 @@ export default {
     },
 
     updateSearchQuery(query) {
-      this.searchQuery = query;
+      this.searchQuery = query || "";
+
+      if (!this.searchQuery.trim()) {
+        this.filteredSkus = [...this.skus];
+      } else {
+        this.filterSkus();
+      }
+
       this.$router.push({
-        query: { ...this.$route.query, search: query },
+        query: { ...this.$route.query, search: this.searchQuery || undefined },
       });
     },
     filterSkus() {
@@ -121,20 +128,27 @@ export default {
 
 <style scoped>
 .header-container {
-  display: flex;
-  align-items: baseline;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  align-items: center;
   margin-top: 10px;
-  gap: 50px;
-  font-size: 32px;
+  justify-content: center;
 }
 
 h1 {
-  font-size: inherit;
+  font-size: 32px;
+  margin: 0;
 }
 
-.small-sort .search-component {
+.search-component {
+  font-size: 16px;
+  text-align: center;
+}
+
+.small-sort {
   max-width: 200px;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -143,7 +157,6 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
   margin-top: 20px;
-  padding: 10px;
   justify-content: center;
 }
 
@@ -200,21 +213,31 @@ h1 {
   .header-container {
     gap: 10px;
   }
+  .header-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 1264px) {
   .phones-container {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .header-container {
+    grid-template-columns: 2fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .header-container {
-    font-size: 20px;
+  .header-container h1 {
+    font-size: 14px;
   }
 
   .phones-container {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .header-container {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -224,6 +247,12 @@ h1 {
   }
   .header-container {
     gap: 5px;
+  }
+}
+
+@media (min-width: 1264px) {
+  .container {
+    max-width: 2500px;
   }
 }
 </style>
