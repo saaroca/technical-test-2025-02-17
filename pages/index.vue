@@ -220,10 +220,6 @@ h1 {
 }
 
 @media (max-width: 768px) {
-  .header-container h1 {
-    font-size: 14px;
-  }
-
   .phones-container {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
