@@ -1,6 +1,5 @@
 <template>
   <div v-if="cart.length" class="checkout-wrapper">
-    <!-- Parte Izquierda: Resumen de Compra -->
     <div class="checkout-left">
       <h1>Resumen de Compra</h1>
       <div class="cart-items">
@@ -22,11 +21,10 @@
       <nuxt-link to="/" class="back-button">Volver a la tienda</nuxt-link>
     </div>
 
-    <!-- Parte Derecha: Checkout -->
     <div class="checkout-right">
-      <h2>Checkout</h2>
+      <h1>Checkout</h1>
       <div class="summary-box">
-        <p class="total-price">Total: {{ totalPrice }}€</p>
+        <p class="price">Total: {{ totalPrice }}€</p>
         <button @click="confirmPurchase" class="confirm-button">
           Confirmar Compra
         </button>
@@ -118,8 +116,9 @@ export default {
 .checkout-wrapper {
   display: flex;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 50px auto;
+  max-width: 1800px;
+  margin: 150px auto;
+  gap: 40px;
 }
 
 .checkout-left {
@@ -128,7 +127,7 @@ export default {
 }
 
 .checkout-right {
-  width: 350px;
+  width: 416px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -144,14 +143,17 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  /* Para dejar a la misma altura que el checkout que tiene un gap de 15px */
+  padding-top: 15px;
 }
 
 .cart-item {
   display: flex;
   align-items: center;
   gap: 20px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .item-image {
@@ -193,10 +195,13 @@ export default {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  color: white;
 }
 
 .payment-methods h3 {
   margin-bottom: 10px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .payment-icons {
@@ -207,6 +212,7 @@ export default {
 .payment-icons img {
   width: 150px;
   height: auto;
+  flex: 1;
 }
 
 .back-button {
@@ -220,11 +226,24 @@ export default {
   text-decoration: underline;
 }
 
+.delete-button {
+  transition: transform 0.2s ease-in-out;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
 .delete-button:hover {
-  background-color: #c82333;
+  transform: scale(1.2);
+  color: #c82333;
 }
 .icon-sad {
   font-size: 100px;
   margin-bottom: 40px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 </style>
