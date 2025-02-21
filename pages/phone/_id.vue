@@ -19,7 +19,7 @@
         <p>Color</p>
         <SkuBadges :color="sku.color" class="badge" />
       </div>
-      <p class="price">Precio: ${{ sku.price }}</p>
+      <p class="price">Precio: {{ sku.price }}€</p>
       <button @click="addToCart" class="buy-button">COMPRAR AHORA</button>
     </div>
   </div>
