@@ -192,6 +192,10 @@ export default {
   margin-top: 10px;
 }
 
+.confirm-button:hover {
+  background-color: #0056b3;
+}
+
 .discount-input {
   width: 100%;
   padding: 10px;
