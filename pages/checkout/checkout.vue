@@ -212,9 +212,8 @@ export default {
 }
 
 .payment-icons img {
-  width: 150px;
-  height: auto;
-  flex: 1;
+  width: 100%;
+  height: 100%;
 }
 
 .back-button {
@@ -266,8 +265,15 @@ h1 {
   .payment-icons {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
+  }
+
+  .payment-icons img {
+    width: 50%;
+  }
+
+  .checkout-left,
+  .checkout-right {
+    padding: 10px;
   }
 }
 </style>
