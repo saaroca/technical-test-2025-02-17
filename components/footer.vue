@@ -1,5 +1,5 @@
 <template>
-  <v-footer :absolute="!fixed" app>
+  <v-footer>
     <v-container class="footer-container">
       <v-row justify="center">
         <v-col cols="6" md="3">
@@ -76,12 +76,6 @@
 <script>
 export default {
   name: "Footer",
-  props: {
-    fixed: {
-      type: Boolean,
-      default: false,
-    },
-  },
 };
 </script>
 
