@@ -79,9 +79,8 @@ export default {
 
 .phone-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   max-height: 500px;
-  object-fit: contain;
 }
 
 .info-container {
