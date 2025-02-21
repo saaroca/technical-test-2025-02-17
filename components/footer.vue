@@ -21,7 +21,9 @@
             </div>
             <div class="contact">
               <v-icon class="footer-icon">mdi-phone</v-icon>
-              <span class="footer-text">+34 680 38 12 32</span>
+              <a href="tel:+34680381232" class="footer-text"
+                >+34 680 38 12 32</a
+              >
             </div>
           </div>
         </v-col>
