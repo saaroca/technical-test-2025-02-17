@@ -1,5 +1,8 @@
 <template>
-  <div v-if="cart.length" class="checkout-wrapper">
+  <div v-if="loading" class="loading-container">
+    <Loading />
+  </div>
+  <div v-else-if="cart.length" class="checkout-wrapper">
     <div class="checkout-left">
       <h1>Resumen de Compra</h1>
       <div class="cart-items">
@@ -36,6 +39,7 @@
         type="text"
         placeholder="Código de descuento"
         class="discount-input"
+        v-model="discountCode"
       />
 
       <div class="payment-methods">
@@ -62,6 +66,7 @@ export default {
     return {
       cart: [],
       discountCode: "",
+      loading: true,
     };
   },
   computed: {
@@ -69,10 +74,22 @@ export default {
       return this.cart.reduce((sum, item) => sum + item.price, 0);
     },
   },
-  mounted() {
-    this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+  async mounted() {
+    await this.fetchCart();
   },
   methods: {
+    async fetchCart() {
+      const { showError } = useToastMessages();
+      try {
+        setTimeout(() => {
+          this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+          this.loading = false;
+        }, 1000);
+      } catch (error) {
+        showError("Error al cargar el carrito", error);
+        this.loading = false;
+      }
+    },
     async confirmPurchase() {
       const { showSuccess, showError } = useToastMessages();
       const { confirmPurchase } = useAlexPhone();
