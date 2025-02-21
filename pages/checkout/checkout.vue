@@ -1,7 +1,7 @@
 <template>
-  <div class="checkout-container">
+  <div v-if="cart.length" class="checkout-container">
     <h1>Resumen de Compra</h1>
-    <div v-if="cart.length" class="cart-items">
+    <div class="cart-items">
       <div v-for="(item, index) in cart" :key="index" class="cart-item">
         <img :src="item.image" :alt="item.name" class="item-image" />
         <div class="item-info">
@@ -21,10 +21,11 @@
         Confirmar Compra
       </button>
     </div>
-    <div style="padding: 4rem" v-else>
-      <p>No hay productos en el carrito.</p>
-      <nuxt-link to="/">Voler a inicio</nuxt-link>
-    </div>
+  </div>
+  <div class="checkout-container" style="padding: 4rem" v-else>
+    <v-icon class="icon-sad">mdi-emoticon-sad-outline</v-icon>
+    <p>No hay productos en el carrito.</p>
+    <nuxt-link to="/">Voler a inicio</nuxt-link>
   </div>
 </template>
 
@@ -170,5 +171,10 @@ export default {
 
 .delete-button:hover {
   background-color: #c82333;
+}
+
+.icon-sad {
+  font-size: 100px;
+  margin-bottom: 40px;
 }
 </style>
