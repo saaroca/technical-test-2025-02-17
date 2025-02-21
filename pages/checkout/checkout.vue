@@ -273,7 +273,11 @@ h1 {
 
   .checkout-left,
   .checkout-right {
-    padding: 10px;
+    padding: 15px;
+  }
+
+  .checkout-right {
+    width: auto;
   }
 }
 </style>
