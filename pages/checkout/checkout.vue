@@ -53,13 +53,14 @@
 
   <div v-else-if="purchaseConfirmed" class="thank-you-message">
     <v-icon class="icon">mdi-clipboard-check-outline</v-icon>
-    <h1>¡Gracias por confiar en nosotros! Su pedido está en marcha.</h1>
+    <h1>¡Gracias por confiar en nosotros!</h1>
+    <h1>Su pedido está en marcha.</h1>
     <nuxt-link to="/">Volver a inicio</nuxt-link>
   </div>
 
   <div class="checkout-container" style="padding: 4rem" v-else>
     <v-icon class="icon">mdi-emoticon-sad-outline</v-icon>
-    <p>No hay productos en la cesta</p>
+    <h1>No hay productos en la cesta</h1>
     <nuxt-link to="/">¡Echa un vistazo a nuestros teléfonos!</nuxt-link>
   </div>
 </template>
