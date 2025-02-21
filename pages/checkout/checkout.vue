@@ -10,13 +10,13 @@
             {{ item.storage }}GB / {{ translateGrade(item.grade) }} /
             {{ translateColor(item.color) }}
           </p>
-          <p class="price">Precio: ${{ item.price }}</p>
+          <p class="price">Precio: {{ item.price }}€</p>
         </div>
         <button @click="removeFromCart(index)" class="delete-button">
           <v-icon>mdi-trash-can-outline</v-icon>
         </button>
       </div>
-      <p class="total-price">Total: ${{ totalPrice }}</p>
+      <p class="total-price">Total: {{ totalPrice }}€</p>
       <button @click="confirmPurchase" class="confirm-button">
         Confirmar Compra
       </button>

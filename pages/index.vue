@@ -25,7 +25,7 @@
             :color="sku.color"
             :storage="sku.storage"
           />
-          <p style="margin-top: 12px">Precio: ${{ sku.price }}</p>
+          <p style="margin-top: 12px">Precio: {{ sku.price }}€</p>
         </div>
       </div>
     </div>
