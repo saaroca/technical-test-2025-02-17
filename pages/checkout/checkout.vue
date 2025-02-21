@@ -2,11 +2,15 @@
   <div v-if="loading" class="loading-container">
     <Loading />
   </div>
-  <div v-else-if="cart.length" class="checkout-wrapper">
+  <div v-else-if="cart.length && !purchaseConfirmed" class="checkout-wrapper">
     <div class="checkout-left">
       <h1>Resumen de Compra</h1>
       <div class="cart-items">
-        <div v-for="(item, index) in cart" :key="index" class="cart-item">
+        <div
+          v-for="(item, index) in groupedCart"
+          :key="index"
+          class="cart-item"
+        >
           <img :src="item.image" :alt="item.name" class="item-image" />
           <div class="item-info">
             <h2>{{ item.name }}</h2>
@@ -14,9 +18,21 @@
               {{ item.storage }}GB / {{ translateGrade(item.grade) }} /
               {{ translateColor(item.color) }}
             </p>
-            <p class="price">Precio: {{ item.price }}€</p>
+            <div class="price-quantity-container">
+              <p class="price">Precio: {{ item.price * item.quantity }}€</p>
+              <div class="quantity-container">
+                <select
+                  class="price quantity"
+                  :id="'quantity-' + index"
+                  v-model="item.quantity"
+                  @change="updateItemQuantity(item)"
+                >
+                  <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <button @click="removeFromCart(index)" class="delete-button">
+          <button @click="removeFromCart(item)" class="delete-button">
             <v-icon>mdi-trash-can-outline</v-icon>
           </button>
         </div>
@@ -64,6 +80,7 @@
     <nuxt-link to="/">¡Echa un vistazo a nuestros teléfonos!</nuxt-link>
   </div>
 </template>
+
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
 import { useToastMessages } from "../../composables/useToast";
@@ -77,11 +94,25 @@ export default {
       purchaseConfirmed: false,
     };
   },
+
   computed: {
+    groupedCart() {
+      return this.cart.reduce((acc, item) => {
+        const key = `${item.name}-${item.storage}-${item.grade}-${item.color}`;
+        if (!acc[key]) {
+          acc[key] = { ...item, quantity: item.quantity || 1 };
+        }
+        return acc;
+      }, {});
+    },
     totalPrice() {
-      return this.cart.reduce((sum, item) => sum + item.price, 0);
+      return Object.values(this.groupedCart).reduce(
+        (sum, item) => sum + item.price * (item.quantity || 1),
+        0
+      );
     },
   },
+
   async mounted() {
     await this.fetchCart();
   },
@@ -98,17 +129,37 @@ export default {
         this.loading = false;
       }
     },
+    updateCart() {
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+    },
+    updateItemQuantity(updatedItem) {
+      const cartItem = this.cart.find(
+        (item) =>
+          item.name === updatedItem.name &&
+          item.storage === updatedItem.storage &&
+          item.grade === updatedItem.grade &&
+          item.color === updatedItem.color
+      );
+
+      if (cartItem) {
+        cartItem.quantity = Number(updatedItem.quantity);
+        this.updateCart();
+      }
+
+      this.$forceUpdate();
+    },
     async confirmPurchase() {
       const { showSuccess, showError } = useToastMessages();
       const { confirmPurchase } = useAlexPhone();
 
       const orderData = {
-        skus: this.cart.map((item) => ({
+        skus: this.groupedCart.map((item) => ({
           id: item.id,
           sku: item.sku,
           grade: item.grade,
           color: item.color,
           storage: item.storage,
+          quantity: item.quantity,
         })),
       };
 
@@ -124,11 +175,19 @@ export default {
         );
       }
     },
-    removeFromCart(index) {
+    removeFromCart(itemToRemove) {
       const { showSuccess } = useToastMessages();
-      showSuccess("Se ha eliminado del carrito");
-      this.cart.splice(index, 1);
+      this.cart = this.cart.filter(
+        (item) =>
+          !(
+            item.name === itemToRemove.name &&
+            item.storage === itemToRemove.storage &&
+            item.grade === itemToRemove.grade &&
+            item.color === itemToRemove.color
+          )
+      );
       localStorage.setItem("cart", JSON.stringify(this.cart));
+      showSuccess("Se ha eliminado del carrito");
     },
     translateGrade(grade) {
       return GRADE_TRANSLATIONS[grade] || grade;
@@ -281,6 +340,33 @@ h1 {
 .summary-detail {
   text-align: left;
   padding: 5px;
+}
+
+.price-quantity-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  align-items: baseline;
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quantity {
+  background: white;
+  border-radius: 8px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.quantity:hover {
+  border-color: #007bff;
 }
 
 @media (max-width: 850px) {

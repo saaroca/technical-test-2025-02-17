@@ -20,7 +20,7 @@
         <SkuBadges :color="sku.color" class="badge" />
       </div>
       <p class="price">Precio: {{ sku.price }}€</p>
-      <button @click="addToCart" class="buy-button">COMPRAR AHORA</button>
+      <button @click="addToCart(sku)" class="buy-button">COMPRAR AHORA</button>
     </div>
   </div>
   <div v-else>
@@ -55,12 +55,31 @@ export default {
     }
   },
   methods: {
-    addToCart() {
-      const { showSuccess } = useToastMessages();
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push(this.sku);
+    addToCart(item) {
+      const { showSuccess, showError } = useToastMessages();
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const existingItem = cart.find(
+        (cartItem) =>
+          cartItem.name === item.name &&
+          cartItem.storage === item.storage &&
+          cartItem.grade === item.grade &&
+          cartItem.color === item.color
+      );
+
+      if (existingItem) {
+        if (existingItem.quantity < 10) {
+          existingItem.quantity += 1;
+          showSuccess("Añadido al carrito correctamente");
+        } else {
+          showError("No puedes agregar más de 10 unidades de este artículo.");
+        }
+      } else {
+        cart.push({ ...item, quantity: 1 });
+        showSuccess("Añadido al carrito correctamente");
+      }
+
       localStorage.setItem("cart", JSON.stringify(cart));
-      showSuccess("Añadido al carrito correctamente");
     },
   },
 };
@@ -123,7 +142,6 @@ export default {
 
 .info-row {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   margin-bottom: 10px;
 }
