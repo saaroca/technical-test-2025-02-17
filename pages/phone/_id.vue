@@ -7,12 +7,18 @@
     <div class="info-container">
       <h1 class="name">{{ sku.name }}</h1>
       <p>{{ sku.description }}</p>
-      <p>Capacidad</p>
-      <SkuBadges :storage="sku.storage" class="badge" />
-      <p>Estado</p>
-      <SkuBadges :grade="sku.grade" class="badge" />
-      <p>Color</p>
-      <SkuBadges :color="sku.color" class="badge" />
+      <div class="info-row">
+        <p>Capacidad</p>
+        <SkuBadges :storage="sku.storage" class="badge" />
+      </div>
+      <div class="info-row">
+        <p>Estado</p>
+        <SkuBadges :grade="sku.grade" class="badge" />
+      </div>
+      <div class="info-row">
+        <p>Color</p>
+        <SkuBadges :color="sku.color" class="badge" />
+      </div>
       <p class="price">Precio: ${{ sku.price }}</p>
       <button @click="addToCart" class="buy-button">COMPRAR AHORA</button>
     </div>
@@ -62,12 +68,14 @@ export default {
 
 <style scoped>
 .details-container {
+  background-color: rgba(255, 255, 255, 0.1);
   display: flex;
   gap: 40px;
-  align-items: center;
-  max-width: 900px;
+  align-items: stretch;
   margin: 50px auto;
   justify-content: center;
+  padding: 25px;
+  border-radius: 10px;
 }
 
 .image-container {
@@ -85,6 +93,9 @@ export default {
 
 .info-container {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .badge {
@@ -110,6 +121,13 @@ export default {
   width: 100%;
 }
 
+.info-row {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .buy-button:hover {
   background-color: #0056b3;
 }
@@ -119,10 +137,6 @@ export default {
     flex-direction: column;
     padding: 20px;
     margin-top: 10px;
-  }
-
-  .name,
-  .price {
   }
 
   .image-container {
