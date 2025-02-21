@@ -24,7 +24,9 @@
     <div class="checkout-right">
       <h1>Checkout</h1>
       <div class="summary-box">
-        <p class="price">Total: {{ totalPrice }}€</p>
+        <p class="price summary-detail">Subtotal: {{ totalPrice }}€</p>
+        <p class="price summary-detail">Costos de envío: 0€</p>
+        <p class="price summary-detail">Total: {{ totalPrice }}€</p>
         <button @click="confirmPurchase" class="confirm-button">
           Confirmar Compra
         </button>
@@ -245,5 +247,27 @@ h1 {
   text-align: center;
   font-size: 28px;
   margin-bottom: 10px;
+}
+
+.summary-detail {
+  text-align: left;
+  padding: 5px;
+}
+
+@media (max-width: 850px) {
+  .checkout-wrapper {
+    flex-direction: column;
+    margin: 25px auto;
+  }
+  .checkout-left,
+  .checkout-right {
+    min-width: 100%;
+  }
+  .payment-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 }
 </style>
