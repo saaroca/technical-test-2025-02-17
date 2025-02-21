@@ -5,13 +5,13 @@ export const useToastMessages = () => {
 
   const showSuccess = (message: string) => {
     toast.success(message, {
-      timeout: 3000,
+      timeout: 2000,
     });
   };
 
   const showError = (message: string) => {
     toast.error(message, {
-      timeout: 5000,
+      timeout: 3000,
     });
   };
 

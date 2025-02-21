@@ -199,7 +199,7 @@ h1 {
 .phone-image {
   width: clamp(150px, 90%, 250px);
   height: auto;
-  max-height: 250px;
+  max-height: 225.89px;
   border-radius: 8px;
   transition: width 0.3s ease, opacity 0.3s ease;
 }
