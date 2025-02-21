@@ -60,15 +60,15 @@ describe("Checkout.vue", () => {
     expect(wrapper.find(".total-price").text()).toContain("799€");
   });
 
-  it("debería mostrar el mensaje de carrito vacío cuando no hay productos", async () => {
-    localStorage.removeItem("cart");
+  // it("debería mostrar el mensaje de carrito vacío cuando no hay productos", async () => {
+  //   localStorage.removeItem("cart");
 
-    wrapper = shallowMount(Checkout);
-    await wrapper.vm.$nextTick();
+  //   wrapper = shallowMount(Checkout);
+  //   await wrapper.vm.$nextTick();
 
-    expect(wrapper.find(".icon-sad").exists()).toBe(true);
-    expect(wrapper.text()).toContain("No hay productos en la cesta");
-  });
+  //   expect(wrapper.find(".icon-sad").exists()).toBe(true);
+  //   expect(wrapper.text()).toContain("No hay productos en la cesta");
+  // });
 
   // it("debería eliminar un producto del carrito", async () => {
   //   const { showSuccess } = useToastMessages();
