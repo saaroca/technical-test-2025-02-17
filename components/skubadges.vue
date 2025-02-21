@@ -50,6 +50,7 @@ const colorLabel =
   border-radius: 12px;
   font-weight: bold;
   text-transform: capitalize;
+  font-size: 12px;
 }
 
 .badge.grade-excellent {

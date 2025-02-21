@@ -17,7 +17,9 @@
       <button @click="addToCart" class="buy-button">COMPRAR AHORA</button>
     </div>
   </div>
-  <p v-else>Cargando detalles...</p>
+  <div v-else>
+    <Loading></Loading>
+  </div>
 </template>
 
 <script>
@@ -77,9 +79,8 @@ export default {
 
 .phone-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   max-height: 500px;
-  object-fit: contain;
 }
 
 .info-container {
