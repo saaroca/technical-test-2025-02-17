@@ -1,22 +1,31 @@
-// import { shallowMount } from "@vue/test-utils";
-// import Search from "@/components/search.vue";
+import { mount } from "@vue/test-utils";
+import Vuetify from "vuetify";
+import Search from "../../components/search.vue"
 
-// describe("Search.vue", () => {
-//   it("emite el evento 'search' con el valor ingresado", async () => {
-//     const wrapper = shallowMount(Search);
+describe("Search.vue", () => {
+  let vuetify;
 
-//     // Encontrar el input dentro del componente v-text-field utilizando el id
-//     const input = wrapper.find("#search-input");
+  beforeEach(() => {
+    vuetify = new Vuetify();
+  });
 
-//     // Asegurarse de que el input fue encontrado
-//     expect(input.exists()).toBe(true);
+  it("debería renderizar el componente correctamente", () => {
+    const wrapper = mount(Search, { vuetify });
+    expect(wrapper.exists()).toBe(true);
+  });
 
-//     // Establecer el valor del input y disparar el evento
-//     await wrapper.setProps({ searchQuery: "iPhone 12" });
-//     await input.trigger("input");
+  it("debería renderizar el input correctamente", () => {
+    const wrapper = mount(Search, { vuetify });
+    const input = wrapper.find("#search-input");
+    expect(input.exists()).toBe(true);
+  });
 
-//     // Comprobar si se emite el evento correctamente
-//     expect(wrapper.emitted("search")).toBeTruthy();
-//     expect(wrapper.emitted("search")[0]).toEqual(["iPhone 12"]);
-//   });
-// });
+  it("debería actualizar el v-model cuando el usuario escribe", async () => {
+    const wrapper = mount(Search, { vuetify });
+    const input = wrapper.find("#search-input");
+
+    await input.setValue("iPhone");
+
+    expect(wrapper.vm.searchQuery).toBe("iPhone");
+  });
+});

@@ -2,41 +2,53 @@
   <div class="sku-badges">
     <span v-if="grade" :class="`badge grade-${grade}`">{{ gradeLabel }}</span>
     <span v-if="color" :class="`badge color-${color}`">{{ colorLabel }}</span>
-    <span v-if="storage" :class="`badge storage-${storage}`"
-      >{{ storage }}GB</span
-    >
+    <span v-if="storage" :class="`badge storage-${storage}`">
+      {{ storage }}GB
+    </span>
   </div>
 </template>
 
-<script setup>
+<script>
 import { GRADE_TRANSLATIONS, COLOR_TRANSLATIONS } from "~/constants/constants";
 
-const props = defineProps({
-  grade: {
-    type: String,
+export default {
+  props: {
+    grade: {
+      type: String,
+      default: "",
+    },
+    color: {
+      type: String,
+      default: "",
+    },
+    storage: {
+      type: Number,
+      default: null,
+    },
   },
-  color: {
-    type: String,
+  data() {
+    return {
+      gradeLabel: "",
+      colorLabel: "",
+    };
   },
-  storage: {
-    type: Number,
-  },
-});
+  created() {
+    this.gradeLabel =
+      {
+        excellent: GRADE_TRANSLATIONS.excellent,
+        very_good: GRADE_TRANSLATIONS.very_good,
+        good: GRADE_TRANSLATIONS.good,
+      }[this.grade] || GRADE_TRANSLATIONS.unknown;
 
-const gradeLabel =
-  {
-    excellent: GRADE_TRANSLATIONS.excellent,
-    very_good: GRADE_TRANSLATIONS.very_good,
-    good: GRADE_TRANSLATIONS.good,
-  }[props.grade] || GRADE_TRANSLATIONS.unknown;
-
-const colorLabel =
-  {
-    white: COLOR_TRANSLATIONS.white,
-    black: COLOR_TRANSLATIONS.black,
-    red: COLOR_TRANSLATIONS.red,
-    pink: COLOR_TRANSLATIONS.pink,
-  }[props.color] || COLOR_TRANSLATIONS.unknown;
+    this.colorLabel =
+      {
+        white: COLOR_TRANSLATIONS.white,
+        black: COLOR_TRANSLATIONS.black,
+        red: COLOR_TRANSLATIONS.red,
+        pink: COLOR_TRANSLATIONS.pink,
+      }[this.color] || COLOR_TRANSLATIONS.unknown;
+  },
+};
 </script>
 
 <style scoped>
