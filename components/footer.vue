@@ -7,7 +7,7 @@
             <h3>¿Dónde estamos?</h3>
             <div class="location">
               <v-icon class="footer-icon">mdi-map-marker</v-icon>
-              <span class="footer-text"
+              <span class="footer-text" style="padding-right: 10px"
                 >C/ de Mallorca, 134, 08036 Barcelona</span
               >
             </div>
