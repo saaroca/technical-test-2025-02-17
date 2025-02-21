@@ -1,34 +1,58 @@
 <template>
-  <div v-if="cart.length" class="checkout-container">
-    <h1>Resumen de Compra</h1>
-    <div class="cart-items">
-      <div v-for="(item, index) in cart" :key="index" class="cart-item">
-        <img :src="item.image" :alt="item.name" class="item-image" />
-        <div class="item-info">
-          <h2>{{ item.name }}</h2>
-          <p>
-            {{ item.storage }}GB / {{ translateGrade(item.grade) }} /
-            {{ translateColor(item.color) }}
-          </p>
-          <p class="price">Precio: {{ item.price }}€</p>
+  <div v-if="cart.length" class="checkout-wrapper">
+    <!-- Parte Izquierda: Resumen de Compra -->
+    <div class="checkout-left">
+      <h1>Resumen de Compra</h1>
+      <div class="cart-items">
+        <div v-for="(item, index) in cart" :key="index" class="cart-item">
+          <img :src="item.image" :alt="item.name" class="item-image" />
+          <div class="item-info">
+            <h2>{{ item.name }}</h2>
+            <p>
+              {{ item.storage }}GB / {{ translateGrade(item.grade) }} /
+              {{ translateColor(item.color) }}
+            </p>
+            <p class="price">Precio: {{ item.price }}€</p>
+          </div>
+          <button @click="removeFromCart(index)" class="delete-button">
+            <v-icon>mdi-trash-can-outline</v-icon>
+          </button>
         </div>
-        <button @click="removeFromCart(index)" class="delete-button">
-          <v-icon>mdi-trash-can-outline</v-icon>
+      </div>
+      <nuxt-link to="/" class="back-button">Volver a la tienda</nuxt-link>
+    </div>
+
+    <!-- Parte Derecha: Checkout -->
+    <div class="checkout-right">
+      <h2>Checkout</h2>
+      <div class="summary-box">
+        <p class="total-price">Total: {{ totalPrice }}€</p>
+        <button @click="confirmPurchase" class="confirm-button">
+          Confirmar Compra
         </button>
       </div>
-      <p class="total-price">Total: {{ totalPrice }}€</p>
-      <button @click="confirmPurchase" class="confirm-button">
-        Confirmar Compra
-      </button>
+
+      <input
+        type="text"
+        placeholder="Código de descuento"
+        class="discount-input"
+      />
+
+      <div class="payment-methods">
+        <h3>Métodos de pago aceptados:</h3>
+        <div class="payment-icons">
+          <img src="../../static/paymentLogos.png" alt="paymentLogos" />
+        </div>
+      </div>
     </div>
   </div>
+
   <div class="checkout-container" style="padding: 4rem" v-else>
     <v-icon class="icon-sad">mdi-emoticon-sad-outline</v-icon>
     <p>No hay productos en la cesta</p>
     <nuxt-link to="/">¡Echa un vistazo a nuestros teléfonos!</nuxt-link>
   </div>
 </template>
-
 <script>
 import useAlexPhone from "../../composables/useAlexPhone";
 import { useToastMessages } from "../../composables/useToast";
@@ -37,6 +61,7 @@ export default {
   data() {
     return {
       cart: [],
+      discountCode: "",
     };
   },
   computed: {
@@ -64,9 +89,7 @@ export default {
 
       try {
         await confirmPurchase(orderData);
-
         showSuccess("¡Compra confirmada exitosamente!");
-
         localStorage.removeItem("cart");
         this.cart = [];
       } catch (error) {
@@ -75,7 +98,6 @@ export default {
         );
       }
     },
-
     removeFromCart(index) {
       const { showSuccess } = useToastMessages();
       showSuccess("Se ha eliminado del carrito");
@@ -83,27 +105,35 @@ export default {
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     translateGrade(grade) {
-      const translations = {
-        excellent: GRADE_TRANSLATIONS.excellent,
-        very_good: GRADE_TRANSLATIONS.very_good,
-        good: GRADE_TRANSLATIONS.good,
-      };
-      return translations[grade] || grade;
+      return GRADE_TRANSLATIONS[grade] || grade;
     },
     translateColor(color) {
-      const translations = {
-        white: COLOR_TRANSLATIONS.white,
-        black: COLOR_TRANSLATIONS.black,
-        red: COLOR_TRANSLATIONS.red,
-        pink: COLOR_TRANSLATIONS.pink,
-      };
-      return translations[color] || color;
+      return COLOR_TRANSLATIONS[color] || color;
     },
   },
 };
 </script>
 
 <style scoped>
+.checkout-wrapper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 50px auto;
+}
+
+.checkout-left {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.checkout-right {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .checkout-container {
   max-width: 800px;
   margin: 50px auto;
@@ -118,8 +148,8 @@ export default {
 
 .cart-item {
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 20px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 10px;
 }
@@ -132,7 +162,6 @@ export default {
 
 .item-info {
   flex: 1;
-  text-align: left;
 }
 
 .price {
@@ -140,39 +169,60 @@ export default {
   font-weight: bold;
 }
 
-.total-price {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-top: 20px;
+.summary-box {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
 }
 
 .confirm-button {
-  background-color: #28a745;
+  width: 100%;
+  background-color: #007bff;
   color: white;
-  padding: 12px 18px;
+  padding: 12px;
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
   border-radius: 5px;
+  margin-top: 10px;
 }
 
-.confirm-button:hover {
-  background-color: #218838;
-}
-
-.delete-button {
-  color: #dc3545;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 1.5rem;
+.discount-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.payment-methods h3 {
+  margin-bottom: 10px;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.payment-icons img {
+  width: 150px;
+  height: auto;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+.back-button:hover {
+  text-decoration: underline;
 }
 
 .delete-button:hover {
   background-color: #c82333;
 }
-
 .icon-sad {
   font-size: 100px;
   margin-bottom: 40px;
