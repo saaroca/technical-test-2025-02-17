@@ -215,7 +215,7 @@ h1 {
   margin-bottom: 8px;
 }
 
-.phone-card:hover .phone-details h3 {
+.phone-card:hover {
   transform: translateY(-5px);
 }
 
