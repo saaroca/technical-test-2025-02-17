@@ -51,8 +51,14 @@
     </div>
   </div>
 
+  <div v-else-if="purchaseConfirmed" class="thank-you-message">
+    <v-icon class="icon">mdi-clipboard-check-outline</v-icon>
+    <h1>¡Gracias por confiar en nosotros! Su pedido está en marcha.</h1>
+    <nuxt-link to="/">Volver a inicio</nuxt-link>
+  </div>
+
   <div class="checkout-container" style="padding: 4rem" v-else>
-    <v-icon class="icon-sad">mdi-emoticon-sad-outline</v-icon>
+    <v-icon class="icon">mdi-emoticon-sad-outline</v-icon>
     <p>No hay productos en la cesta</p>
     <nuxt-link to="/">¡Echa un vistazo a nuestros teléfonos!</nuxt-link>
   </div>
@@ -67,6 +73,7 @@ export default {
       cart: [],
       discountCode: "",
       loading: true,
+      purchaseConfirmed: false,
     };
   },
   computed: {
@@ -109,6 +116,7 @@ export default {
         showSuccess("¡Compra confirmada exitosamente!");
         localStorage.removeItem("cart");
         this.cart = [];
+        this.purchaseConfirmed = true;
       } catch (error) {
         showError(
           "Hubo un error al confirmar tu compra. Por favor, inténtalo de nuevo."
@@ -258,7 +266,7 @@ export default {
   transform: scale(1.2);
   color: #c82333;
 }
-.icon-sad {
+.icon {
   font-size: 100px;
   margin-bottom: 40px;
 }
@@ -300,5 +308,19 @@ h1 {
   .checkout-right {
     width: auto;
   }
+}
+
+.thank-you-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  text-align: center;
+}
+
+.thank-you-message h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 </style>
