@@ -38,7 +38,6 @@ import SkuBadges from "../components/skubadges.vue";
 import SortDropdown from "../components/sort.vue";
 import Search from "../components/search.vue";
 import { SortOptions, Grade, StorageOrder } from "../constants/constants";
-
 export default {
   components: { SkuBadges, SortDropdown, Search },
   data() {
@@ -47,6 +46,7 @@ export default {
       filteredSkus: [],
       selectedSku: null,
       searchQuery: "",
+      currentSortOption: null,
     };
   },
   async mounted() {
@@ -75,6 +75,8 @@ export default {
   },
   methods: {
     onSort(sortOption, updateUrl = true) {
+      this.currentSortOption = sortOption;
+
       if (updateUrl) {
         this.$router.push({
           query: {
@@ -85,20 +87,19 @@ export default {
         });
       }
 
-      if (sortOption === SortOptions.LOW_TO_HIGH) {
-        this.filteredSkus = [...this.filteredSkus].sort(
-          (a, b) => a.price - b.price
-        );
-      } else if (sortOption === SortOptions.HIGH_TO_LOW) {
-        this.filteredSkus = [...this.filteredSkus].sort(
-          (a, b) => b.price - a.price
-        );
-      } else if (sortOption === SortOptions.GRADE) {
-        this.filteredSkus = [...this.filteredSkus].sort(
+      this.sortFilteredSkus();
+    },
+    sortFilteredSkus() {
+      if (this.currentSortOption === SortOptions.LOW_TO_HIGH) {
+        this.filteredSkus.sort((a, b) => a.price - b.price);
+      } else if (this.currentSortOption === SortOptions.HIGH_TO_LOW) {
+        this.filteredSkus.sort((a, b) => b.price - a.price);
+      } else if (this.currentSortOption === SortOptions.GRADE) {
+        this.filteredSkus.sort(
           (a, b) => (Grade[b.grade] || 0) - (Grade[a.grade] || 0)
         );
-      } else if (sortOption === SortOptions.STORAGE) {
-        this.filteredSkus = [...this.filteredSkus].sort(
+      } else if (this.currentSortOption === SortOptions.STORAGE) {
+        this.filteredSkus.sort(
           (a, b) =>
             StorageOrder.indexOf(a.storage) - StorageOrder.indexOf(b.storage)
         );
@@ -113,10 +114,7 @@ export default {
 
       if (!this.searchQuery.trim()) {
         this.filteredSkus = [...this.skus];
-
-        if (this.$route.query.sort) {
-          this.onSort(this.$route.query.sort, false);
-        }
+        this.sortFilteredSkus();
       } else {
         this.filterSkus();
       }
@@ -130,6 +128,7 @@ export default {
       this.filteredSkus = this.skus.filter((sku) =>
         sku.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
+      this.sortFilteredSkus();
     },
     resetSkus() {
       if (this.searchQuery) {
