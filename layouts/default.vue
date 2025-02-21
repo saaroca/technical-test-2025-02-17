@@ -1,10 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar 
-      fixed 
-      app 
-      :class="{ 'hide-navbar': isHidden }"
-    >
+    <v-app-bar fixed app :class="{ 'hide-navbar': isHidden }">
       <nuxt-link to="/" icon>
         <img
           class="alexphone-logo"
@@ -28,9 +24,7 @@
       </v-container>
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer :fixed="fixed" />
   </v-app>
 </template>
 
@@ -54,7 +48,7 @@ export default {
     };
 
     const handleScroll = () => {
-      console.log("handleScroll")
+      console.log("handleScroll");
       const currentScrollY = window.scrollY;
       isHidden.value = currentScrollY > lastScrollY && currentScrollY > 50;
       lastScrollY = currentScrollY;
