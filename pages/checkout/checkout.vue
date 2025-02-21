@@ -24,8 +24,8 @@
   </div>
   <div class="checkout-container" style="padding: 4rem" v-else>
     <v-icon class="icon-sad">mdi-emoticon-sad-outline</v-icon>
-    <p>No hay productos en el carrito.</p>
-    <nuxt-link to="/">Voler a inicio</nuxt-link>
+    <p>No hay productos en la cesta</p>
+    <nuxt-link to="/">¡Echa un vistazo a nuestros teléfonos!</nuxt-link>
   </div>
 </template>
 
