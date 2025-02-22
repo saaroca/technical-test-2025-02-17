@@ -27,7 +27,7 @@
             </div>
           </div>
         </v-col>
-        <v-col cols="6" md="3">
+        <v-col cols="6" md="3" data-test="social-links">
           <h3>Enlaces de interés</h3>
           <p>
             <v-icon>mdi-post-outline</v-icon>
@@ -49,7 +49,7 @@
             >
           </p>
         </v-col>
-        <v-col cols="6" md="3">
+        <v-col cols="6" md="3" data-test="customer-service-links">
           <h3>Atención al cliente</h3>
           <p><a href="https://www.alexphone.es/contacto">Contacto</a></p>
           <p><a href="https://www.alexphone.es/preguntas-frecuentes">FAQ</a></p>
