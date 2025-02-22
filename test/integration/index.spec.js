@@ -1,53 +1,73 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
-import VueRouter from "vue-router";
-import Index from "@/pages/index.vue";
+import { shallowMount } from "@vue/test-utils";
+import Index from "../../pages/index.vue";
 
-jest.mock("@/composables/useAlexPhone.ts", () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    fetchSkus: jest.fn(() =>
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () =>
       Promise.resolve([
         {
           id: 1,
           name: "iPhone 12",
-          price: 699,
-          grade: "A",
-          storage: "128GB",
           image: "iphone12.jpg",
+          price: 600,
+          grade: "A",
+          color: "Black",
+          storage: "128GB",
+          sku: "iphone12-128gb-black",
         },
-        {
-          id: 2,
-          name: "iPhone 11",
-          price: 599,
-          grade: "B",
-          storage: "64GB",
-          image: "iphone11.jpg",
-        },
-      ])
-    ),
-  })),
-}));
+      ]),
+  })
+);
 
-const localVue = createLocalVue();
-localVue.use(VueRouter);
-const router = new VueRouter();
+jest.mock("../../composables/useAlexPhone.ts", () => {
+  return jest.fn(() => ({
+    fetchSkus: jest.fn().mockResolvedValue([
+      {
+        id: 1,
+        name: "iPhone 12",
+        image: "iphone12.jpg",
+        price: 600,
+        grade: "A",
+        color: "Black",
+        storage: "128GB",
+        sku: "iphone12-128gb-black",
+      },
+    ]),
+  }));
+});
 
 describe("Index.vue", () => {
   let wrapper;
 
   beforeEach(async () => {
-    wrapper = shallowMount(Index, { localVue, router });
+    wrapper = shallowMount(Index);
     await wrapper.vm.$nextTick();
   });
 
-  it("se renderiza correctamente", () => {
-    expect(wrapper.exists()).toBe(true);
+  it("debe renderizar el título correctamente", () => {
+    expect(wrapper.find('[data-test="title"]').text()).toBe(
+      "Iphones Reacondicionados"
+    );
   });
 
-  it("obtiene y muestra los skus", async () => {
+  it("debe mostrar la lista de teléfonos", async () => {
     await wrapper.vm.$nextTick();
-    const phoneCards = wrapper.findAll(".phone-card");
-    expect(phoneCards.length).toBe(2);
-    expect(phoneCards.at(0).text()).toContain("iPhone 12");
+    expect(wrapper.findAll('[data-test="phone-card"]').length).toBe(1);
+  });
+
+  it("debe filtrar la lista de teléfonos al realizar una búsqueda", async () => {
+    await wrapper
+      .find('[data-test="search-component"]')
+      .vm.$emit("search", "iPhone 12");
+    await wrapper.vm.$nextTick();
+    expect(wrapper.findAll('[data-test="phone-card"]').length).toBe(1);
+  });
+
+  it("debe actualizar la lista cuando se ordena por precio de menor a mayor", async () => {
+    await wrapper
+      .find('[data-test="sort-dropdown"]')
+      .vm.$emit("sort", "LOW_TO_HIGH");
+    await wrapper.vm.$nextTick();
+    expect(wrapper.find('[data-test="phone-price"]').text()).toContain("600€");
   });
 });

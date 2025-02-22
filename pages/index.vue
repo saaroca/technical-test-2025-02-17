@@ -1,31 +1,45 @@
 <template>
   <div class="container">
     <div class="header-container">
-      <h1>Iphones Reacondicionados</h1>
-      <search class="search-component" @search="updateSearchQuery" />
+      <h1 data-test="title">Iphones Reacondicionados</h1>
+      <search
+        class="search-component"
+        @search="updateSearchQuery"
+        data-test="search-component"
+      />
       <sort-dropdown
         @sort="onSort"
         @reset-sort="resetSkus"
         class="small-sort"
+        data-test="sort-dropdown"
       />
     </div>
 
-    <div class="phones-container">
+    <div class="phones-container" data-test="phones-container">
       <div
         v-for="sku in filteredSkus"
         :key="sku.id"
         class="phone-card"
         @click="getDetails(sku)"
+        data-test="phone-card"
       >
-        <img :src="sku.image" :alt="sku.name" class="phone-image" />
-        <div class="phone-details">
-          <h3>{{ sku.name }}</h3>
+        <img
+          :src="sku.image"
+          :alt="sku.name"
+          class="phone-image"
+          data-test="phone-image"
+        />
+        <div class="phone-details" data-test="phone-details">
+          <h3 data-test="phone-name">{{ sku.name }}</h3>
           <SkuBadges
             :grade="sku.grade"
             :color="sku.color"
             :storage="sku.storage"
+            data-test="phone-badges"
           />
-          <p style="margin-top: 12px">Precio: {{ sku.price }}€</p>
+          <p style="margin-top: 12px" data-test="phone-price">
+            Precio: {{ sku.price }}€
+          </p>
         </div>
       </div>
     </div>
