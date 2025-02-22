@@ -48,17 +48,17 @@ describe("Checkout.vue", () => {
   });
 
   it("debería mostrar el resumen de compra cuando hay productos en el carrito", () => {
-    expect(wrapper.find(".checkout-wrapper").exists()).toBe(true);
-    expect(wrapper.find(".cart-item").exists()).toBe(true);
+    expect(wrapper.find("[data-test='checkout-wrapper']").exists()).toBe(true);
+    expect(wrapper.find("[data-test='cart-item']").exists()).toBe(true);
   });
 
   it("debería calcular el precio total correctamente", () => {
     expect(wrapper.vm.totalPrice).toBe(500);
   });
 
-  it("debería eliminar un producto del carrito", () => {
+  it("debería eliminar un producto del carrito", async () => {
     const itemToRemove = mockCart[0];
-    wrapper.vm.removeFromCart(itemToRemove);
+    await wrapper.vm.removeFromCart(itemToRemove);
 
     expect(wrapper.vm.cart).toHaveLength(1);
     expect(wrapper.vm.cart[0].name).toBe("Producto 2");

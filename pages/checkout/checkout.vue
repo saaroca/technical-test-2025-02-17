@@ -2,7 +2,11 @@
   <div v-if="loading" class="loading-container">
     <Loading />
   </div>
-  <div v-else-if="cart.length && !purchaseConfirmed" class="checkout-wrapper">
+  <div
+    v-else-if="cart.length && !purchaseConfirmed"
+    class="checkout-wrapper"
+    data-test="checkout-wrapper"
+  >
     <div class="checkout-left">
       <h1>Resumen de Compra</h1>
       <div class="cart-items">
@@ -10,6 +14,7 @@
           v-for="(item, index) in groupedCart"
           :key="index"
           class="cart-item"
+          data-test="cart-item"
         >
           <img :src="item.image" :alt="item.name" class="item-image" />
           <div class="item-info">
@@ -32,7 +37,11 @@
               </div>
             </div>
           </div>
-          <button @click="removeFromCart(item)" class="delete-button">
+          <button
+            @click="removeFromCart(item)"
+            class="delete-button"
+            data-test="remove-item-button"
+          >
             <v-icon>mdi-trash-can-outline</v-icon>
           </button>
         </div>
@@ -46,7 +55,11 @@
         <p class="price summary-detail">Subtotal: {{ totalPrice }}€</p>
         <p class="price summary-detail">Costos de envío: 0€</p>
         <p class="price summary-detail">Total: {{ totalPrice }}€</p>
-        <button @click="confirmPurchase" class="confirm-button">
+        <button
+          @click="confirmPurchase"
+          class="confirm-button"
+          data-test="confirm-purchase-button"
+        >
           Confirmar Compra
         </button>
       </div>
