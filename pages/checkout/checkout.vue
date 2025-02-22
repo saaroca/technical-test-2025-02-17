@@ -97,13 +97,17 @@ export default {
 
   computed: {
     groupedCart() {
-      return this.cart.reduce((acc, item) => {
+      const grouped = this.cart.reduce((acc, item) => {
         const key = `${item.name}-${item.storage}-${item.grade}-${item.color}`;
         if (!acc[key]) {
           acc[key] = { ...item, quantity: item.quantity || 1 };
+        } else {
+          acc[key].quantity += item.quantity || 1;
         }
         return acc;
       }, {});
+
+      return Object.values(grouped);
     },
     totalPrice() {
       return Object.values(this.groupedCart).reduce(
