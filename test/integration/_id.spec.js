@@ -4,7 +4,6 @@ import SkuBadges from "@/components/skubadges.vue";
 import useAlexPhone from "@/composables/useAlexPhone";
 import { useToastMessages } from "@/composables/useToast";
 
-// Mock de dependencias
 jest.mock("@/composables/useAlexPhone");
 jest.mock("@/composables/useToast");
 
@@ -29,7 +28,7 @@ describe("Id.vue", () => {
   it("renderiza correctamente con un SKU", async () => {
     const mockSku = {
       name: "iPhone 13",
-      description: "Un gran teléfono",
+      description: "telefono",
       storage: "128GB",
       grade: "A",
       color: "Negro",
@@ -45,7 +44,7 @@ describe("Id.vue", () => {
       },
     });
 
-    await wrapper.vm.$nextTick(); // Esperamos a que se resuelva el fetch
+    await wrapper.vm.$nextTick();
 
     expect(wrapper.find("h1").text()).toBe(mockSku.name);
     expect(wrapper.find("p").text()).toContain(mockSku.description);

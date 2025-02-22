@@ -1,5 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import Checkout from "../../pages/checkout/checkout.vue";
+import { useToastMessages } from "../../composables/useToast";
+import useAlexPhone from "../../composables/useAlexPhone";
 
 jest.mock("../../composables/useToast", () => ({
   useToastMessages: jest.fn(() => ({
@@ -11,6 +13,7 @@ jest.mock("../../composables/useToast", () => ({
 jest.mock("../../composables/useAlexPhone", () => ({
   useAlexPhone: jest.fn(() => ({
     confirmPurchase: jest.fn(),
+    useFetchForConfirmPurchase: jest.fn(),
   })),
 }));
 
@@ -62,5 +65,13 @@ describe("Checkout.vue", () => {
 
     expect(wrapper.vm.cart).toHaveLength(1);
     expect(wrapper.vm.cart[0].name).toBe("Producto 2");
+  });
+
+  it("debería mostrar un mensaje si no hay productos en el carrito", async () => {
+    wrapper.setData({ cart: [] });
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.find(".checkout-container").exists()).toBe(true);
+    expect(wrapper.find("h1").text()).toBe("No hay productos en la cesta");
   });
 });
