@@ -1,3 +1,18 @@
+export const GRADE_TRANSLATIONS = {
+  excellent: "Excelente",
+  very_good: "Muy bueno",
+  good: "Bueno",
+  unknown: "Desconocido",
+};
+
+export const COLOR_TRANSLATIONS = {
+  white: "Blanco",
+  black: "Negro",
+  red: "Rojo",
+  pink: "Rosa",
+  unknown: "Desconocido",
+};
+
 export const SortOptions = {
   LOW_TO_HIGH: "lowToHigh",
   HIGH_TO_LOW: "highToLow",
@@ -17,21 +32,6 @@ export enum Grade {
   very_good = 2,
   good = 1,
 }
-
-export const GRADE_TRANSLATIONS = {
-  excellent: "Excelente",
-  very_good: "Muy bueno",
-  good: "Bueno",
-  unknown: "Desconocido",
-};
-
-export const COLOR_TRANSLATIONS = {
-  white: "Blanco",
-  black: "Negro",
-  red: "Rojo",
-  pink: "Rosa",
-  unknown: "Desconocido",
-};
 
 export const GradeOrder = [Grade.excellent, Grade.very_good, Grade.good];
 

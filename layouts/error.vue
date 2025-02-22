@@ -1,10 +1,8 @@
 <template>
   <v-app dark>
     <v-container class="text-center">
-      <!-- Icono de error -->
       <v-icon large color="error">mdi-alert-circle-outline</v-icon>
 
-      <!-- Mensajes de error -->
       <h1 v-if="error.statusCode === 404">
         {{ pageNotFound }}
       </h1>
@@ -12,7 +10,6 @@
         {{ otherError }}
       </h1>
 
-      <!-- Enlace para volver al inicio -->
       <NuxtLink to="/" class="btn-link"> Volver al inicio </NuxtLink>
     </v-container>
   </v-app>

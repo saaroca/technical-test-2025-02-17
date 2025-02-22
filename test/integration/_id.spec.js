@@ -4,7 +4,6 @@ import SkuBadges from "@/components/skubadges.vue";
 import useAlexPhone from "@/composables/useAlexPhone";
 import { useToastMessages } from "@/composables/useToast";
 
-// Mock de dependencias
 jest.mock("@/composables/useAlexPhone");
 jest.mock("@/composables/useToast");
 
