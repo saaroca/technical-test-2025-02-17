@@ -26,27 +26,26 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      gradeLabel: "",
-      colorLabel: "",
-    };
-  },
-  created() {
-    this.gradeLabel =
-      {
-        excellent: GRADE_TRANSLATIONS.excellent,
-        very_good: GRADE_TRANSLATIONS.very_good,
-        good: GRADE_TRANSLATIONS.good,
-      }[this.grade] || GRADE_TRANSLATIONS.unknown;
-
-    this.colorLabel =
-      {
-        white: COLOR_TRANSLATIONS.white,
-        black: COLOR_TRANSLATIONS.black,
-        red: COLOR_TRANSLATIONS.red,
-        pink: COLOR_TRANSLATIONS.pink,
-      }[this.color] || COLOR_TRANSLATIONS.unknown;
+  computed: {
+    gradeLabel() {
+      return (
+        {
+          excellent: GRADE_TRANSLATIONS.excellent,
+          very_good: GRADE_TRANSLATIONS.very_good,
+          good: GRADE_TRANSLATIONS.good,
+        }[this.grade] || GRADE_TRANSLATIONS.unknown
+      );
+    },
+    colorLabel() {
+      return (
+        {
+          white: COLOR_TRANSLATIONS.white,
+          black: COLOR_TRANSLATIONS.black,
+          red: COLOR_TRANSLATIONS.red,
+          pink: COLOR_TRANSLATIONS.pink,
+        }[this.color] || COLOR_TRANSLATIONS.unknown
+      );
+    },
   },
 };
 </script>

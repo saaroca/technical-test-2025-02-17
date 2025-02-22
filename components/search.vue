@@ -11,19 +11,22 @@
   ></v-text-field>
 </template>
 
-<script setup>
-import { ref } from "vue";
-
-const emit = defineEmits();
-const searchQuery = ref("");
-
-const cleanQuery = (query) => {
-  if (!query) return query;
-  return query.trim().replace(/\s+/g, " ");
-};
-
-const filterPhones = () => {
-  const cleanedQuery = cleanQuery(searchQuery.value);
-  emit("search", cleanedQuery);
+<script>
+export default {
+  data() {
+    return {
+      searchQuery: "",
+    };
+  },
+  methods: {
+    cleanQuery(query) {
+      if (!query) return query;
+      return query.trim().replace(/\s+/g, " ");
+    },
+    filterPhones() {
+      const cleanedQuery = this.cleanQuery(this.searchQuery);
+      this.$emit("search", cleanedQuery);
+    },
+  },
 };
 </script>
