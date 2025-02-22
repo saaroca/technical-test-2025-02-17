@@ -34,7 +34,7 @@ http://localhost:3000
    Al hacer clic en un producto, podrás ver su imagen, nombre, estado, capacidad de almacenamiento, precio y una opción para añadirlo al carrito.
 
 3. Carrito de Compras:
-   Añade productos al carrito, visualízalos y eliminalos.
+   Añade productos al carrito, visualízalos, cambia la cantidad y eliminalos.
 
 ### Estructura del proyecto
 
