@@ -18,7 +18,7 @@ const emit = defineEmits();
 const searchQuery = ref("");
 
 const cleanQuery = (query) => {
-  if (query === null) return query;
+  if (!query) return query;
   return query.trim().replace(/\s+/g, " ");
 };
 
