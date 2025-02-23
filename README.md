@@ -5,7 +5,7 @@ Utiliza _Vue.js 2.7.16v_ con _Nuxt.js 2.18.1v_ para frontend.
 
 
 [!IMPORTANT]
-### Configuración del proyecto
+Configuración del proyecto
 
 1. Instalación
    Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
