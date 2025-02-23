@@ -3,6 +3,8 @@
 Este proyecto es un ecommerce donde los usuarios pueden explorar, buscar y ordenar los iPhones que tenemos en stock.
 Utiliza _Vue.js 2.7.16v_ con _Nuxt.js 2.18.1v_ para frontend.
 
+[!IMPORTANT]
+
 ### Configuración del proyecto
 
 1. Instalación
@@ -36,6 +38,7 @@ http://localhost:3000
 3. Carrito de Compras:
    Añade productos al carrito, visualízalos, cambia la cantidad y eliminalos.
 
+[!IMPORTANT]
 ### Estructura del proyecto
 
 Se sigue una estructura modular, cada componente se divide en funcionalidades específicas:
@@ -71,6 +74,8 @@ API externa: [API AlexPhone](https://test.alexphone.com/api/v1).
    - **Cuerpo**: Espera un objeto `CreateOrderBody` que contiene una lista de SKUs (iPhones) a comprar.
    - **Respuesta**: Devuelve una respuesta de tipo `void`.
 
+
+[!NOTE]
 ### Contribución
 
 Si deseas contribuir al proyecto, sigue estos pasos:
