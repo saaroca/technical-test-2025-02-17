@@ -3,8 +3,8 @@
 Este proyecto es un ecommerce donde los usuarios pueden explorar, buscar y ordenar los iPhones que tenemos en stock.
 Utiliza _Vue.js 2.7.16v_ con _Nuxt.js 2.18.1v_ para frontend.
 
-[!IMPORTANT]
 
+[!IMPORTANT]
 ### Configuración del proyecto
 
 1. Instalación
