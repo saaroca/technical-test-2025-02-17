@@ -1,6 +1,5 @@
 export default function useAlexPhone() {
   const baseUrl = "/api";
-
   /**obtener todos los SKUs */
   const fetchSkus = async (): Promise<Sku[] | null> => {
     const { data, error } = await useFetch<Sku[]>(`${baseUrl}/skus`);
@@ -17,20 +16,16 @@ export default function useAlexPhone() {
 
   /** Función de compra */
   const confirmPurchase = async (orderData: CreateOrderBody): Promise<void> => {
-    const { data, error } = await useFetchForConfirmPurchase(
+    const { data, error } = await useFetch(
       `${baseUrl}/order`,
       {
         method: "PUT",
         body: JSON.stringify(orderData),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
+      },
+      true
     );
 
     if (error) handleError(new Error("Error al confirmar la compra"));
-    if (data === null) return;
   };
 
   return { fetchSkus, fetchSkuDetails, confirmPurchase };
@@ -39,25 +34,8 @@ export default function useAlexPhone() {
 /**peticiones HTTP */
 async function useFetch<T>(
   url: string,
-  options: RequestInit = {}
-): Promise<{ data: T | null; error: Error | null }> {
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
-  });
-
-  const error = !response.ok ? new Error(await response.text()) : null;
-  const data = response.ok ? await response.json() : null;
-
-  return { data, error };
-}
-
-async function useFetchForConfirmPurchase<T>(
-  url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  allowEmptyResponse = false
 ): Promise<{ data: T | null; error: Error | null }> {
   try {
     const response = await fetch(url, {
@@ -68,18 +46,19 @@ async function useFetchForConfirmPurchase<T>(
       },
     });
 
-    const error = !response.ok ? new Error(await response.text()) : null;
+    if (!response.ok)
+      return { data: null, error: new Error(await response.text()) };
 
     const data =
-      response.ok && response.status !== 204 ? await response.json() : null;
-
-    return { data, error };
+      allowEmptyResponse && response.status === 204
+        ? null
+        : await response.json();
+    return { data, error: null };
   } catch (err) {
     handleError(new Error("Error en la solicitud"));
     return { data: null, error: new Error("Error en la solicitud") };
   }
 }
-
 const handleError = (error: Error) => {
   console.error(error);
   throw error;
