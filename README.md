@@ -4,8 +4,8 @@ Este proyecto es un ecommerce donde los usuarios pueden explorar, buscar y orden
 Utiliza _Vue.js 2.7.16v_ con _Nuxt.js 2.18.1v_ para frontend.
 
 
-[!IMPORTANT]
-Configuración del proyecto
+>[!IMPORTANT]
+>Configuración del proyecto
 
 1. Instalación
    Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
@@ -38,8 +38,8 @@ http://localhost:3000
 3. Carrito de Compras:
    Añade productos al carrito, visualízalos, cambia la cantidad y eliminalos.
 
-[!IMPORTANT]
-### Estructura del proyecto
+>[!IMPORTANT]
+>Estructura del proyecto
 
 Se sigue una estructura modular, cada componente se divide en funcionalidades específicas:
 **/components** Componentes reutilizables (ej. SkuBadges, Search)
@@ -75,8 +75,8 @@ API externa: [API AlexPhone](https://test.alexphone.com/api/v1).
    - **Respuesta**: Devuelve una respuesta de tipo `void`.
 
 
-[!NOTE]
-### Contribución
+>[!NOTE]
+>Contribución
 
 Si deseas contribuir al proyecto, sigue estos pasos:
 
