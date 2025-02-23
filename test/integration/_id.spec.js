@@ -44,7 +44,7 @@ describe("Id.vue", () => {
       },
     });
 
-    await wrapper.vm.$nextTick(); // Esperamos a que se resuelva el fetch
+    await wrapper.vm.$nextTick();
 
     expect(wrapper.find("h1").text()).toBe(mockSku.name);
     expect(wrapper.find("p").text()).toContain(mockSku.description);
